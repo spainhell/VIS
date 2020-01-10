@@ -1,0 +1,68 @@
+﻿<Page x:Class="wpfapp.PageCreateVehicle"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:wpfapp"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Vytvoření vozidla">
+
+    <Page.Resources>
+        <Style x:Key="DgViews" TargetType="DataGrid">
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="DarkBlue"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White"/>
+            </Style.Resources>
+            <Setter Property="SelectionMode" Value="Single"></Setter>
+            <Setter Property="AlternationCount" Value="2"></Setter>
+            <Setter Property="AlternatingRowBackground" Value="#FFFFF2E2"></Setter>
+            <Setter Property="IsReadOnly" Value="True"></Setter>
+            <Setter Property="VerticalGridLinesBrush" Value="White"></Setter>
+            <Setter Property="GridLinesVisibility" Value="Vertical"></Setter>
+            <Setter Property="RowBackground" Value="LightCyan"></Setter>
+            <Setter Property="ItemsSource" Value="{Binding}"></Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="#FF252D45">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <Label Content="Vytvoření vozidla" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="0" Width="300" Foreground="White"/>
+        
+        <Label Content="Název" HorizontalAlignment="Left" Margin="30,30,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
+        <TextBox Name="tbTitle" HorizontalAlignment="Left" Height="23" Margin="180,35,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
+        
+        <Label Content="Druh" HorizontalAlignment="Left" Margin="30,60,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
+        <ComboBox Name="cbType" HorizontalAlignment="Left" Margin="180,65,0,0" Grid.Row="1" VerticalAlignment="Top" Width="240"/>
+
+        <Label Content="Značka" HorizontalAlignment="Left" Margin="30,90,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
+        <ComboBox Name="cbBrand" HorizontalAlignment="Left" Margin="180,95,0,0" Grid.Row="1" VerticalAlignment="Top" Width="240"/>
+
+        <Label Content="VIN kód" HorizontalAlignment="Left" Margin="30,120,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
+        <TextBox Name="tbVin" HorizontalAlignment="Left" Height="23" Margin="180,125,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
+
+        <Label Content="SPZ" HorizontalAlignment="Left" Margin="30,150,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
+        <TextBox Name="tbLicensePlate" HorizontalAlignment="Left" Height="23" Margin="180,155,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
+
+        <Label Content="Rok výroby" HorizontalAlignment="Left" Margin="30,180,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
+        <TextBox Name="tbVintage" HorizontalAlignment="Left" Height="23" Margin="180,185,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
+
+        <Label Content="Pořizovací cena" HorizontalAlignment="Left" Margin="30,210,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
+        <TextBox Name="tbPrice" HorizontalAlignment="Left" Height="23" Margin="180,215,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
+
+        <Label Content="Datum pořízení" HorizontalAlignment="Left" Margin="30,240,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
+        <!--<TextBox Name="tbPurchasedOn" HorizontalAlignment="Left" Height="23" Margin="180,245,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>-->
+        <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="180,245,0,0" Grid.Row="1" VerticalAlignment="Top" Width="240" />
+        
+        <Button Content="Vytvoř vozidlo" HorizontalAlignment="Center" Margin="0,0,0,30" Grid.Row="1" VerticalAlignment="Bottom" Width="auto" Padding="10,0,10,0" Click="Button_Click"/>
+        
+
+
+
+
+
+    </Grid>
+</Page>

@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VehicleTypes>
+  <VehicleType id="1">
+    <TypeName>osobní vozidlo</TypeName>
+  </VehicleType>
+  <VehicleType id="2">
+    <TypeName>nákladní vozidlo</TypeName>
+  </VehicleType>
+  <VehicleType id="3">
+    <TypeName>motocykl</TypeName>
+  </VehicleType>
+  <VehicleType id="4">
+    <TypeName>autobus</TypeName>
+  </VehicleType>
+</VehicleTypes>

@@ -1,0 +1,41 @@
+﻿<Window x:Class="wpfapp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpfapp"
+        mc:Ignorable="d"
+        Title="Správa vozového parku" Height="800" Width="1024">
+    <Grid Background="#FF252D45">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="192"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel Grid.Column="0" Grid.Row="0" Name="MenuDockPanel" HorizontalAlignment="Stretch" LastChildFill="True" VerticalAlignment="Stretch" Background="#FF1A2028">
+            <Grid VerticalAlignment="Top">
+                <Grid.Resources>
+                    <Style x:Key="MenuBtns" TargetType="Button">
+                        <Setter Property="Width" Value="150"></Setter>
+                        <Setter Property="Height" Value="45"></Setter>
+                        <Setter Property="FontSize" Value="16"></Setter>
+                        <Setter Property="Background" Value="SeaGreen"></Setter>
+                        <Setter Property="Foreground" Value="White"></Setter>
+                        <Setter Property="BorderThickness" Value="0"></Setter>
+                        <Setter Property="HorizontalAlignment" Value="Left"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Top"></Setter>
+                        <Setter Property="ToolTipService.InitialShowDelay" Value="1500"></Setter>
+                        <Setter Property="ToolTipService.ShowDuration" Value="10000"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <Rectangle Name="RectSide" HorizontalAlignment="Left" Height="45" Stroke="Black" VerticalAlignment="Top" Width="7" Margin="15,140,0,0" Fill="#FFF4F4F5" StrokeThickness="0"/>
+                <Button Name="btnStatistics" Style="{StaticResource MenuBtns}" Content="Nástěnka" Margin="29,140,0,0" ToolTip="" IsEnabled="True" Click="BtnStatistics_Click"/>
+                <Button Name="btnVehicles" Style="{StaticResource MenuBtns}" Content="Vozidla" Margin="29,230,0,0" ToolTip="" IsEnabled="True" Click="BtnVehicles_Click"/>
+                <Button Name="btnCreateVehicle" Style="{StaticResource MenuBtns}" Content="Nové vozidlo" Margin="29,320,0,0" ToolTip="" IsEnabled="True" Click="BtnCreateVehicle_Click"/>
+                <!--<Button Name="btnFCE3" Style="{StaticResource MenuBtns}" Content="FCE3" Margin="29,410,0,0" ToolTip="" IsEnabled="True"/>-->
+                
+            </Grid>
+
+        </DockPanel>
+        <Frame Name="FrmModule" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF252D45" BorderThickness="0" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>

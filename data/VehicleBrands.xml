@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<VehicleBrands>
+  <VehicleBrand id="1">
+    <BrandName>Škoda</BrandName>
+    <LogoUrl>http://www.skoda.cz</LogoUrl>
+  </VehicleBrand>
+  <VehicleBrand id="2">
+    <BrandName>Opel</BrandName>
+    <LogoUrl>http://www.opel.cz</LogoUrl>
+  </VehicleBrand>
+  <VehicleBrand id="3">
+    <BrandName>Audi</BrandName>
+    <LogoUrl>http://www.audi.cz</LogoUrl>
+  </VehicleBrand>
+  <VehicleBrand id="4">
+    <BrandName>Honda</BrandName>
+    <LogoUrl>http://www.honda.cz</LogoUrl>
+  </VehicleBrand>
+</VehicleBrands>

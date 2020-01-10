@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "coreapp", "coreapp\coreapp.csproj", "{05AE1331-D24E-478E-81A0-4B6DFE4EC754}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "desktopapp", "desktopapp\desktopapp.csproj", "{E030DA24-12E8-4678-B4CC-47332B75886D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "webapp", "webapp\webapp.csproj", "{5317AD35-72D0-41C4-AFD1-283FB41F3529}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05AE1331-D24E-478E-81A0-4B6DFE4EC754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05AE1331-D24E-478E-81A0-4B6DFE4EC754}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05AE1331-D24E-478E-81A0-4B6DFE4EC754}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05AE1331-D24E-478E-81A0-4B6DFE4EC754}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E030DA24-12E8-4678-B4CC-47332B75886D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E030DA24-12E8-4678-B4CC-47332B75886D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E030DA24-12E8-4678-B4CC-47332B75886D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E030DA24-12E8-4678-B4CC-47332B75886D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5317AD35-72D0-41C4-AFD1-283FB41F3529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5317AD35-72D0-41C4-AFD1-283FB41F3529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5317AD35-72D0-41C4-AFD1-283FB41F3529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5317AD35-72D0-41C4-AFD1-283FB41F3529}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18ABDA02-0274-44C5-91C4-BE577081468F}
+	EndGlobalSection
+EndGlobal

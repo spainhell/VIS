@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\coreapp\coreapp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PageCreateVehicle.xaml.cs">
+      <DependentUpon>PageCreateVehicle.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PageStatistics.xaml.cs">
+      <DependentUpon>PageStatistics.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PageVehicles.xaml.cs">
+      <DependentUpon>PageVehicles.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="VehicleDetailWindow.xaml.cs">
+      <DependentUpon>VehicleDetailWindow.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="MainWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PageCreateVehicle.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PageStatistics.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PageVehicles.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="VehicleDetailWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
+</Project>
