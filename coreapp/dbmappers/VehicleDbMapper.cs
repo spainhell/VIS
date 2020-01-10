@@ -17,13 +17,14 @@ namespace testapp.dbmappers
         private static string selectById = "SELECT rowid, * FROM Vehicles WHERE rowid=@Id";
 
         private static string insert =
-            "INSERT INTO Vehicles(VehicleTypeId, VehicleBrandId, Title, Vin, LicensePlate, " +
+            "INSERT INTO Vehicles(VehicleTypeId, VehicleBrandId, Title, Vin, LicensePlate, DriverId, AdminId" +
             "Vintage, PurchasedOn, Price) values (@VehicleTypeId, @VehicleBrandId, @Title, @Vin, @LicensePlate, " +
-            "@Vintage, @PurchasedOn, @Price)";
+            "@Vintage, @PurchasedOn, @Price, @DriverId, @AdminId)";
 
         private static string update = "UPDATE Vehicles SET VehicleTypeId=@VehicleTypeId, VehicleBrandId=@VehicleBrandId, " +
                                        "Title=@Title, Vin=@Vin, LicensePlate=@LicensePlate, Vintage=@Vintage, " +
-                                       "PurchasedOn=@PurchasedOn, Price=@Price WHERE rowid=@Id";
+                                       "PurchasedOn=@PurchasedOn, Price=@Price, DriverId=@DriverId, AdminId=@AdminId " +
+                                       "WHERE rowid=@Id";
 
         private static string delete = "DELETE FROM Vehicles WHERE rowid=@Id";
 
@@ -49,7 +50,9 @@ namespace testapp.dbmappers
                             LicensePlate = reader["LicensePlate"].ToString(),
                             Vintage = Convert.ToInt16(reader["Vintage"]),
                             PurchasedOn = Convert.ToDateTime(reader["PurchasedOn"]),
-                            Price = Convert.ToDecimal(reader["Price"].ToString())
+                            Price = Convert.ToDecimal(reader["Price"].ToString()),
+                            Admin = UserAdminDbMapper.SelectById(conn, Convert.ToInt32(reader["AdminId"])),
+                            Driver = UserDriverDbMapper.SelectById(conn, Convert.ToInt32(reader["DriverId"]))
                         };
                         result.Add(vm);
                     }
@@ -88,7 +91,9 @@ namespace testapp.dbmappers
                             LicensePlate = reader["LicensePlate"].ToString(),
                             Vintage = Convert.ToInt16(reader["Vintage"]),
                             PurchasedOn = Convert.ToDateTime(reader["PurchasedOn"]),
-                            Price = Convert.ToDecimal(reader["Price"].ToString())
+                            Price = Convert.ToDecimal(reader["Price"].ToString()),
+                            Admin = UserAdminDbMapper.SelectById(conn, Convert.ToInt32(reader["AdminId"])),
+                            Driver = UserDriverDbMapper.SelectById(conn, Convert.ToInt32(reader["DriverId"]))
                         };
                         reader.Close();
                         return vm;
@@ -117,6 +122,8 @@ namespace testapp.dbmappers
                 cmd.Parameters.AddWithValue("@Vintage", vm.Vintage);
                 cmd.Parameters.AddWithValue("@PurchasedOn", vm.PurchasedOn);
                 cmd.Parameters.AddWithValue("@Price", vm.Price);
+                cmd.Parameters.AddWithValue("@AdminId", vm.Admin.Id);
+                cmd.Parameters.AddWithValue("@DriverId", vm.Driver.Id);
 
                 try
                 {
@@ -147,6 +154,8 @@ namespace testapp.dbmappers
                 cmd.Parameters.AddWithValue("@Vintage", vm.Vintage);
                 cmd.Parameters.AddWithValue("@PurchasedOn", vm.PurchasedOn);
                 cmd.Parameters.AddWithValue("@Price", vm.Price);
+                cmd.Parameters.AddWithValue("@AdminId", vm.Admin.Id);
+                cmd.Parameters.AddWithValue("@DriverId", vm.Driver.Id);
 
                 try
                 {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using coreapp.models;
 
 namespace testapp.models
 {
@@ -17,6 +18,8 @@ namespace testapp.models
         public short Vintage { get; set; }
         public DateTime PurchasedOn { get; set; }
         public decimal Price { get; set; }
+        public UserDriverModel Driver { get; set; }
+        public UserBossModel Admin { get; set; }
 
         public override string ToString()
         {
