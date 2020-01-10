@@ -14,6 +14,8 @@ import { DriversComponent } from "./drivers/drivers.component";
   declarations: [
     AppComponent,
     NavMenuComponent,
+    HomeComponent,
+    DriversComponent
 
   ],
   imports: [

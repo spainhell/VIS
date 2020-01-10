@@ -12,16 +12,16 @@ namespace testapp.dbmappers
 {
     public class UserDriverDbMapper
     {
-        private static string selectAll = "SELECT rowid, * FROM Users";
+        private static string selectAll = "SELECT rowid, * FROM Users WHERE rowid NOT IN (SELECT UserId FROM UserBosses)";
         private static string selectById = "SELECT rowid, * FROM Users WHERE rowid=@Id";
 
         private static string insert =
-            "INSERT INTO Users(FirstName, LastName, Email, Phone, Company, Street, City, Zip, Active) " +
-            "VALUES (@FirstName, @LastName, @Email, @Phone, @Company, @Street, @City, @Zip, @Active)";
+            "INSERT INTO Users(FirstName, LastName, Email, Phone, Street, City, Zip, Active, QualificationTo) " +
+            "VALUES (@FirstName, @LastName, @Email, @Phone, @Street, @City, @Zip, @Active, @QualificationTo)";
 
         private static string update = "UPDATE Users SET FirstName=@FirstName, LastName=@LastName, Email=@Email, " +
-                                       "Phone=@Phone, Company=@Company, Street=@Street, City=@City, Zip=@Zip, Active=@Active " +
-                                       "WHERE rowid=@Id";
+                                       "Phone=@Phone, Street=@Street, City=@City, Zip=@Zip, Active=@Active, " +
+                                       "QualificationTo = @QualificationTo WHERE rowid=@Id";
 
         private static string delete = "DELETE FROM Users WHERE rowid=@Id";
 
@@ -47,7 +47,8 @@ namespace testapp.dbmappers
                             Street = reader["Street"].ToString(),
                             City = reader["City"].ToString(),
                             Zip = reader["Zip"].ToString(),
-                            Active = Convert.ToBoolean(reader["Active"])
+                            Active = Convert.ToBoolean(reader["Active"]),
+                            QualificationTo = Convert.ToDateTime(reader["QualificationTo"])
                         };
                         result.Add(um);
                     }
@@ -87,7 +88,8 @@ namespace testapp.dbmappers
                             Street = reader["Street"].ToString(),
                             City = reader["City"].ToString(),
                             Zip = reader["Zip"].ToString(),
-                            Active = Convert.ToBoolean(reader["Active"])
+                            Active = Convert.ToBoolean(reader["Active"]),
+                            QualificationTo = Convert.ToDateTime(reader["QualificationTo"])
                         };
                         reader.Close();
                         return um;
@@ -102,7 +104,7 @@ namespace testapp.dbmappers
             return null;
         }
 
-        public static int Insert(SQLiteConnection conn, UserModel um)
+        public static int Insert(SQLiteConnection conn, UserDriverModel um)
         {
             if (um == null) return -2;
 
@@ -116,6 +118,7 @@ namespace testapp.dbmappers
                 cmd.Parameters.AddWithValue("@City", um.City);
                 cmd.Parameters.AddWithValue("@Zip", um.Zip);
                 cmd.Parameters.AddWithValue("@Active", um.Active);
+                cmd.Parameters.AddWithValue("@QualificationTo", um.QualificationTo);
 
                 try
                 {
@@ -146,6 +149,7 @@ namespace testapp.dbmappers
                 cmd.Parameters.AddWithValue("@City", um.City);
                 cmd.Parameters.AddWithValue("@Zip", um.Zip);
                 cmd.Parameters.AddWithValue("@Active", um.Active);
+                cmd.Parameters.AddWithValue("@QualificationTo", um.QualificationTo);
 
                 try
                 {

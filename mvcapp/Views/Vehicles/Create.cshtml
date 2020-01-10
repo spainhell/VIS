@@ -1,0 +1,105 @@
+﻿@using coreapp.models
+@using testapp.models
+@model testapp.models.VehicleModel
+
+@{
+    ViewData["Title"] = "Create";
+    List<VehicleTypeModel> types = (List<VehicleTypeModel>) ViewData["vehicleTypes"];
+    List<VehicleBrandModel> brands = (List<VehicleBrandModel>) ViewData["vehicleBrands"];
+    List<UserDriverModel> drivers = (List<UserDriverModel>) ViewData["drivers"];
+    List<UserBossModel> bosses = (List<UserBossModel>) ViewData["bosses"];
+}
+
+<h1>Create</h1>
+
+<h4>VehicleModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+            <label asp-for="Id" class="control-label"></label>
+            <input asp-for="Id" class="form-control" />
+            <span asp-validation-for="Id" class="text-danger"></span>
+        </div>*@
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleTypeId" class="control-label">Typ vozidla</label>
+                <select asp-for="VehicleTypeId" class="form-control">
+                    @foreach (var item in types)
+                    {
+                        <option value="@item.Id">@item.TypeName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="VehicleBrandId" class="control-label">Značka vozidla</label>
+                <select asp-for="VehicleBrandId" class="form-control">
+                    @foreach (var item in brands)
+                    {
+                        <option value="@item.Id">@item.BrandName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vin" class="control-label"></label>
+                <input asp-for="Vin" class="form-control" />
+                <span asp-validation-for="Vin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LicensePlate" class="control-label"></label>
+                <input asp-for="LicensePlate" class="form-control" />
+                <span asp-validation-for="LicensePlate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Vintage" class="control-label"></label>
+                <input asp-for="Vintage" class="form-control" />
+                <span asp-validation-for="Vintage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PurchasedOn" class="control-label"></label>
+                <input asp-for="PurchasedOn" class="form-control" />
+                <span asp-validation-for="PurchasedOn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DriverId" class="control-label">Řidič</label>
+                <select asp-for="DriverId" class="form-control">
+                    @foreach (var item in drivers)
+                    {
+                        <option value="@item.Id">@item.FirstName @item.LastName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BossId" class="control-label">Správce</label>
+                <select asp-for="BossId" class="form-control">
+                    @foreach (var item in bosses)
+                    {
+                        <option value="@item.Id">@item.FirstName @item.LastName</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

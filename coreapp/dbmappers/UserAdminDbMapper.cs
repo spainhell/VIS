@@ -14,7 +14,7 @@ namespace testapp.dbmappers
     {
         private static string selectAll = "SELECT UB.rowid, * FROM UserBosses UB INNER JOIN Users U " +
                                           "WHERE UB.UserId = U.rowid AND (CanManageUsers IS NOT NULL OR CanManageNotifications IS NOT NULL OR CanManageStations IS NOT NULL)";
-        private static string selectById = selectAll + " AND UB.UserId=@Id";
+        private static string selectById = selectAll + " AND UB.rowid=@Id";
 
         private static string insertU =
             "INSERT INTO Users(FirstName, LastName, Email, Phone, Street, City, Zip, Active) " +

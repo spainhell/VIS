@@ -17,8 +17,8 @@ namespace testapp.dbmappers
         private static string selectById = "SELECT rowid, * FROM Vehicles WHERE rowid=@Id";
 
         private static string insert =
-            "INSERT INTO Vehicles(VehicleTypeId, VehicleBrandId, Title, Vin, LicensePlate, DriverId, AdminId" +
-            "Vintage, PurchasedOn, Price) values (@VehicleTypeId, @VehicleBrandId, @Title, @Vin, @LicensePlate, " +
+            "INSERT INTO Vehicles(VehicleTypeId, VehicleBrandId, Title, Vin, LicensePlate, " +
+            "Vintage, PurchasedOn, Price, DriverId, AdminId) values (@VehicleTypeId, @VehicleBrandId, @Title, @Vin, @LicensePlate, " +
             "@Vintage, @PurchasedOn, @Price, @DriverId, @AdminId)";
 
         private static string update = "UPDATE Vehicles SET VehicleTypeId=@VehicleTypeId, VehicleBrandId=@VehicleBrandId, " +
@@ -51,7 +51,7 @@ namespace testapp.dbmappers
                             Vintage = Convert.ToInt16(reader["Vintage"]),
                             PurchasedOn = Convert.ToDateTime(reader["PurchasedOn"]),
                             Price = Convert.ToDecimal(reader["Price"].ToString()),
-                            Admin = UserAdminDbMapper.SelectById(conn, Convert.ToInt32(reader["AdminId"])),
+                            Boss = UserBossDbMapper.SelectById(conn, Convert.ToInt32(reader["AdminId"])),
                             Driver = UserDriverDbMapper.SelectById(conn, Convert.ToInt32(reader["DriverId"]))
                         };
                         result.Add(vm);
@@ -92,7 +92,7 @@ namespace testapp.dbmappers
                             Vintage = Convert.ToInt16(reader["Vintage"]),
                             PurchasedOn = Convert.ToDateTime(reader["PurchasedOn"]),
                             Price = Convert.ToDecimal(reader["Price"].ToString()),
-                            Admin = UserAdminDbMapper.SelectById(conn, Convert.ToInt32(reader["AdminId"])),
+                            Boss = UserBossDbMapper.SelectById(conn, Convert.ToInt32(reader["AdminId"])),
                             Driver = UserDriverDbMapper.SelectById(conn, Convert.ToInt32(reader["DriverId"]))
                         };
                         reader.Close();
@@ -122,7 +122,7 @@ namespace testapp.dbmappers
                 cmd.Parameters.AddWithValue("@Vintage", vm.Vintage);
                 cmd.Parameters.AddWithValue("@PurchasedOn", vm.PurchasedOn);
                 cmd.Parameters.AddWithValue("@Price", vm.Price);
-                cmd.Parameters.AddWithValue("@AdminId", vm.Admin.Id);
+                cmd.Parameters.AddWithValue("@AdminId", vm.Boss.Id);
                 cmd.Parameters.AddWithValue("@DriverId", vm.Driver.Id);
 
                 try
@@ -154,7 +154,7 @@ namespace testapp.dbmappers
                 cmd.Parameters.AddWithValue("@Vintage", vm.Vintage);
                 cmd.Parameters.AddWithValue("@PurchasedOn", vm.PurchasedOn);
                 cmd.Parameters.AddWithValue("@Price", vm.Price);
-                cmd.Parameters.AddWithValue("@AdminId", vm.Admin.Id);
+                cmd.Parameters.AddWithValue("@AdminId", vm.Boss.Id);
                 cmd.Parameters.AddWithValue("@DriverId", vm.Driver.Id);
 
                 try
@@ -190,6 +190,26 @@ namespace testapp.dbmappers
                 }
             }
             return 0;
+        }
+
+        public static bool VinExists(SQLiteConnection conn, string vin)
+        {
+            if (String.IsNullOrEmpty(vin)) return false;
+
+            using (SQLiteCommand cmd = new SQLiteCommand($"SELECT COUNT(Vin) FROM Vehicles WHERE Vin = {vin}", conn))
+            {
+                try
+                {
+                    long count = (long) cmd.ExecuteScalar();
+                    if (count > 0) return true;
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine($"EXCEPTION: VehicleDbMapper.Delete: {e.Message}");
+                    return false;
+                }
+            }
+            return false;
         }
     }
 }
