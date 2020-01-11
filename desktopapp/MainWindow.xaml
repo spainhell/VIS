@@ -31,7 +31,9 @@
                 <Button Name="btnStatistics" Style="{StaticResource MenuBtns}" Content="Nástěnka" Margin="29,140,0,0" ToolTip="" IsEnabled="True" Click="BtnStatistics_Click"/>
                 <Button Name="btnVehicles" Style="{StaticResource MenuBtns}" Content="Vozidla" Margin="29,230,0,0" ToolTip="" IsEnabled="True" Click="BtnVehicles_Click"/>
                 <Button Name="btnCreateVehicle" Style="{StaticResource MenuBtns}" Content="Nové vozidlo" Margin="29,320,0,0" ToolTip="" IsEnabled="True" Click="BtnCreateVehicle_Click"/>
-                <!--<Button Name="btnFCE3" Style="{StaticResource MenuBtns}" Content="FCE3" Margin="29,410,0,0" ToolTip="" IsEnabled="True"/>-->
+                <Button x:Name="btnCreateInspection" Style="{StaticResource MenuBtns}" Content="Nová STK" Margin="29,410,0,0" ToolTip="" IsEnabled="True" Click="BtnCreateInspection_Click"/>
+                <Button x:Name="btnNotifications" Style="{StaticResource MenuBtns}" Content="Notifikace" Margin="29,500,0,0" ToolTip="" IsEnabled="True" Click="BtnViewNotifications_Click"/>
+
                 
             </Grid>
 

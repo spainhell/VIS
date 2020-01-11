@@ -15,11 +15,17 @@
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Update="PageCreateVehicle - Copy.xaml.cs">
+      <DependentUpon>PageCreateVehicle.xaml</DependentUpon>
+    </Compile>
     <Compile Update="PageCreateVehicle.xaml.cs">
       <DependentUpon>PageCreateVehicle.xaml</DependentUpon>
     </Compile>
     <Compile Update="PageStatistics.xaml.cs">
       <DependentUpon>PageStatistics.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="PageVehicles - Copy.xaml.cs">
+      <DependentUpon>PageVehicles.xaml</DependentUpon>
     </Compile>
     <Compile Update="PageVehicles.xaml.cs">
       <DependentUpon>PageVehicles.xaml</DependentUpon>
@@ -33,10 +39,16 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="PageCreateInspection.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="PageCreateVehicle.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="PageStatistics.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="PageNotifications.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="PageVehicles.xaml">

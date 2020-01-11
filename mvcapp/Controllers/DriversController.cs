@@ -93,7 +93,11 @@ namespace mvcapp.Controllers
         // GET: Drivers/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            sqlconn.Open();
+            UserDriverModel driver = UserDriverDbMapper.SelectById(sqlconn, id);
+            sqlconn.Close();
+
+            return View(driver);
         }
 
         // POST: Drivers/Delete/5

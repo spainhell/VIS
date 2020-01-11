@@ -51,7 +51,7 @@ namespace wpfapp
 
         private void BtnDetail_Click(object sender, RoutedEventArgs e)
         {
-            VehicleDetailWindow vdw = new VehicleDetailWindow(_sqlConn, _selectedVehicle);
+            VehicleDetailWindow vdw = new VehicleDetailWindow(_sqlConn, _selectedVehicle, this);
             vdw.Show();
         }
     }

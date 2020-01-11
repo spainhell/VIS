@@ -15,6 +15,11 @@ namespace testapp.dbmappers
     {
         private static string selectAll = "SELECT rowid, * FROM Vehicles";
         private static string selectById = "SELECT rowid, * FROM Vehicles WHERE rowid=@Id";
+        private static string selectByAdminId = "SELECT COUNT(rowid) FROM Vehicles WHERE AdminId=@AdminId";
+
+        private static string selectDriversCountByAdminId =
+            "SELECT COUNT(*) FROM (SELECT DriverId, COUNT(DriverId) FROM Vehicles WHERE AdminId=@AdminId GROUP BY DriverId)";
+
 
         private static string insert =
             "INSERT INTO Vehicles(VehicleTypeId, VehicleBrandId, Title, Vin, LicensePlate, " +
@@ -210,6 +215,42 @@ namespace testapp.dbmappers
                 }
             }
             return false;
+        }
+
+        public static long SelectVehiclesByAdminId(SQLiteConnection conn, int adminId)
+        {
+            using (SQLiteCommand cmd = new SQLiteCommand(selectByAdminId, conn))
+            {
+                cmd.Parameters.AddWithValue("@AdminId", adminId);
+                try
+                {
+                    long count = (long)cmd.ExecuteScalar();
+                    return count;
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine($"EXCEPTION: VehicleDbMapper.SelectVehiclesByAdminId: {e.Message}");
+                }
+            }
+            return -1;
+        }
+
+        public static long SelectDriversCountByAdminId(SQLiteConnection conn, int adminId)
+        {
+            using (SQLiteCommand cmd = new SQLiteCommand(selectDriversCountByAdminId, conn))
+            {
+                cmd.Parameters.AddWithValue("@AdminId", adminId);
+                try
+                {
+                    long count = (long)cmd.ExecuteScalar();
+                    return count;
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine($"EXCEPTION: VehicleDbMapper.SelectDriversCountByAdminId: {e.Message}");
+                }
+            }
+            return -1;
         }
     }
 }

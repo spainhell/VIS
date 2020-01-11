@@ -21,16 +21,19 @@ namespace mvcapp.Controllers
         public ActionResult Index()
         {
             sqlconn.Open();
-            List<VehicleModel> drivers = VehicleDbMapper.SelectAll(sqlconn);
+            List<VehicleModel> vehicles = VehicleDbMapper.SelectAll(sqlconn);
             sqlconn.Close();
 
-            return View(drivers);
+            return View(vehicles);
         }
 
         // GET: Vehicles/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            sqlconn.Open();
+            VehicleModel vehicle = VehicleDbMapper.SelectById(sqlconn, id);
+            sqlconn.Close();
+            return View(vehicle);
         }
 
         // GET: Vehicles/Create
@@ -110,23 +113,35 @@ namespace mvcapp.Controllers
         // GET: Vehicles/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            sqlconn.Open();
+            VehicleModel vehicle = VehicleDbMapper.SelectById(sqlconn, id);
+            sqlconn.Close();
+
+            return View(vehicle);
         }
 
         // POST: Vehicles/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, VehicleModel vehicle)
         {
             try
             {
-                // TODO: Add delete logic here
+                sqlconn.Open();
+                List<InspectionModel> inspections = InspectionDbMapper.SelectAllByVehicleId(sqlconn, id);
+                sqlconn.Close();
+
+                if (inspections.Count > 0) return View(vehicle);
+
+                sqlconn.Open();
+                VehicleDbMapper.Delete(sqlconn, vehicle);
+                sqlconn.Close();
 
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                return View(vehicle);
             }
         }
     }

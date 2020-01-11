@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    var vehicles = ViewData["Vehicles"];
+    var drivers = ViewData["Drivers"];
+    var inspections = ViewData["Inspections"];
+}
+
+<h1>Statistika</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Položka
+            </th>
+            <th>
+                Počet
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Celkový počet vozidel ve vaší správě:
+            </td>
+            <td>
+                @vehicles
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Celkový počet řidičů na vozdilech ve vaší správě:
+            </td>
+            <td>
+                @drivers
+            </td>
+    </tr>
+    <tr>
+        <td>
+            Počet kontrol končících v násl. 30 dnech u vašich vozidel:
+        </td>
+        <td>
+            @inspections
+        </td>
+    </tr>
+    </tbody>
+
+</table>
+

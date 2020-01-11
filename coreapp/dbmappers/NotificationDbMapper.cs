@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SQLite;
 using System.Diagnostics;
 using System.Linq;
@@ -18,10 +19,16 @@ namespace testapp.dbmappers
         private static string insert =
             "INSERT INTO Notifications(InspectionId, Destination, SentOn, Delivered) VALUES (@InspectionId, @Destination, @SentOn, @Delivered)";
 
-        private static string update = "UPDATE Notifications SET InspectionId=@InspectionId, Destination=@Destination, SentOn=@SentOn, Delivered=@Delivered WHERE Id=@Id";
+        private static string update = 
+            "UPDATE Notifications SET InspectionId=@InspectionId, Destination=@Destination, SentOn=@SentOn, Delivered=@Delivered WHERE Id=@Id";
 
         private static string delete = "DELETE FROM Notifications WHERE Id=@Id";
 
+        private static string generateNotifications =
+            "SELECT I.rowid AS 'InspectionId', V.rowid AS 'VehicleId', V.title, V.LicensePlate, I.ValidTo, " +
+            "CAST(julianday(I.ValidTo) - julianday('now') AS Integer) AS 'Days' FROM Inspections I " +
+            "JOIN Vehicles V ON I.VehicleId = V.rowid WHERE julianday(I.ValidTo) - julianday('now') < @days " +
+            "AND I.rowid NOT IN (SELECT InspectionId FROM Notifications)";
 
         public static List<NotificationModel> SelectAll(SQLiteConnection conn)
         {
@@ -192,6 +199,48 @@ namespace testapp.dbmappers
                 }
             }
             return 0;
+        }
+
+        public static List<NotificationModel> GenerateNotifications(SQLiteConnection conn, int days)
+        {
+            List<NotificationModel> result = new List<NotificationModel>();
+            using (SQLiteCommand cmd = new SQLiteCommand(generateNotifications, conn))
+            {
+                cmd.Parameters.AddWithValue("@days", days);
+                SQLiteDataReader reader = null;
+                try
+                {
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        NotificationModel nm = new NotificationModel()
+                        {
+                            Id = -1,
+                            Inspection = InspectionDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionId"])),
+                            Destination = "",
+                            SentOn = DateTime.Now,
+                            Delivered = DateTime.Now
+                        };
+
+                        var vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"]));
+                        var boss = UserBossDbMapper.SelectById(conn, vehicle.Boss.Id);
+                        var email = boss.Email;
+                        nm.Destination = email;
+
+                        result.Add(nm);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine($"EXCEPTION: NotificationDbMapper.SelectAll: {e.Message}");
+                }
+                finally
+                {
+                    reader?.Close();
+                }
+            }
+
+            return result;
         }
     }
 }

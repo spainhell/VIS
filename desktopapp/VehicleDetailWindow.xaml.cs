@@ -28,11 +28,13 @@ namespace wpfapp
     {
         private readonly SQLiteConnection _sqlConn;
         private readonly VehicleModel _vehicle;
+        private readonly PageVehicles _parent;
 
-        public VehicleDetailWindow(SQLiteConnection sqlConn, VehicleModel vehicle)
+        public VehicleDetailWindow(SQLiteConnection sqlConn, VehicleModel vehicle, PageVehicles parent)
         {
             _sqlConn = sqlConn;
             _vehicle = vehicle;
+            _parent = parent;
             InitializeComponent();
             Refresh();
         }
@@ -57,5 +59,38 @@ namespace wpfapp
             tbStation.Text = sortedInspections[0].InspectionStation.Company;
         }
 
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            var mb = MessageBox.Show($"Přejete si opravdu smazat vozdilo?",
+                "Smazání vozidla", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (mb == MessageBoxResult.No) return;
+
+            // vyhledání tech. kontrol
+            List<InspectionModel> inspections = InspectionDbMapper.SelectAllByVehicleId(_sqlConn, _vehicle.Id);
+
+            // vyhlednání všech notifikací
+            List<NotificationModel> notifications = new List<NotificationModel>(inspections.Count);
+            foreach (InspectionModel inspection in inspections)
+            {
+                NotificationModel insNotify = NotificationDbMapper.SelectByInspectionId(_sqlConn, inspection.Id);
+                if (insNotify != null) notifications.Add(insNotify);
+            }
+
+            // smazání všech notifikací
+            foreach (NotificationModel notification in notifications)
+            {
+                NotificationDbMapper.Delete(_sqlConn, notification);
+            }
+
+            // smazání všech tech. kontrol
+            foreach (InspectionModel inspection in inspections)
+            {
+                InspectionDbMapper.Delete(_sqlConn, inspection);
+            }
+
+            _parent.Refresh();
+            Close();
+        }
     }
 }

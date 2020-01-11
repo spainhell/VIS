@@ -1,0 +1,56 @@
+﻿<Page x:Class="wpfapp.PageNotifications"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:wpfapp"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PageFCE1">
+
+    <Page.Resources>
+        <Style x:Key="DgViews" TargetType="DataGrid">
+            <Style.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="DarkBlue"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="White"/>
+            </Style.Resources>
+            <Setter Property="SelectionMode" Value="Single"></Setter>
+            <Setter Property="AlternationCount" Value="2"></Setter>
+            <Setter Property="AlternatingRowBackground" Value="#FFFFF2E2"></Setter>
+            <Setter Property="IsReadOnly" Value="True"></Setter>
+            <Setter Property="VerticalGridLinesBrush" Value="White"></Setter>
+            <Setter Property="GridLinesVisibility" Value="Vertical"></Setter>
+            <Setter Property="RowBackground" Value="LightCyan"></Setter>
+            <Setter Property="ItemsSource" Value="{Binding}"></Setter>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="#FF252D45">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+        <Label x:Name="labelVehicles" Content="Generování notifikací" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="0" Width="300" Foreground="White"/>
+        <GroupBox x:Name="groupBox" Foreground="White" Header="Notifikace k odeslání" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="15,0,15,40" Grid.Column="0" Grid.Row="1" >
+            <DataGrid x:Name="DgNotifications" Style="{StaticResource DgViews}" AutoGenerateColumns="False" SelectionChanged="DgVehicles_SelectionChanged">
+                <DataGrid.Columns>
+                    <!--<DataGridCheckBoxColumn Header="OK" Binding="{Binding done, Mode=OneWay}" />-->
+                    <DataGridTextColumn Header="Generováno" Binding="{Binding SentOn}" Width="auto" Foreground="Gray"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Destination}" Width="auto" />
+                    <DataGridTextColumn Header="Vozidlo" Binding="{Binding Inspection.Vehicle.Title}" Width="auto"/>
+                    <DataGridTextColumn Header="SPZ" Binding="{Binding Inspection.Vehicle.LicensePlate}" Width="auto" />
+                    <DataGridTextColumn Header="Platnost do" Binding="{Binding Inspection.ValidTo}" Width="auto" />
+                    <DataGridTextColumn Header="Stanice STK" Binding="{Binding Inspection.InspectionStation.Company}" Width="auto" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+        
+
+        <Button x:Name="BtnDetail" Content="Zobrazit detail" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" IsEnabled="False" Grid.Row="2" Height="36" Click="BtnDetail_Click"/>
+
+
+
+
+    </Grid>
+</Page>

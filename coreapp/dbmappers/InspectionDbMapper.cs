@@ -16,6 +16,9 @@ namespace testapp.dbmappers
 
         private static string selectAllByVehicleId = "SELECT rowid, * FROM Inspections WHERE VehicleId=@Id";
 
+        private static string selectAllByVehicleAdminId =
+            "SELECT * FROM Inspections WHERE VehicleId IN (SELECT rowid FROM Vehicles WHERE AdminId=@AdminId)";
+
         private static string insert =
             "INSERT INTO Inspections(VehicleId, InspectionDate, ValidTo, InspectionStationId, ProtocolNumber, " +
             "Tachometer, Price, Defects) values (@VehicleId, @InspectionDate, @ValidTo, @InspectionStationId, " +
@@ -26,7 +29,6 @@ namespace testapp.dbmappers
                                        "Tachometer=@Tachometer, Price=@Price, Defects=@Defects WHERE rowid=@Id";
 
         private static string delete = "DELETE FROM Inspections WHERE rowid=@Id";
-
 
         public static List<InspectionModel> SelectAll(SQLiteConnection conn)
         {
@@ -222,6 +224,46 @@ namespace testapp.dbmappers
                 }
             }
             return 0;
+        }
+
+        public static List<InspectionModel> SelectAllByVehicleAdminId(SQLiteConnection conn, int adminId)
+        {
+            List<InspectionModel> result = new List<InspectionModel>();
+            using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
+            {
+                SQLiteDataReader reader = null;
+                cmd.Parameters.AddWithValue("@AdminId", adminId);
+                try
+                {
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        InspectionModel im = new InspectionModel()
+                        {
+                            Id = Convert.ToInt32(reader["rowid"].ToString()),
+                            Vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"])),
+                            InspectionDate = Convert.ToDateTime(reader["InspectionDate"]),
+                            ValidTo = Convert.ToDateTime(reader["ValidTo"]),
+                            InspectionStation = InspectionStationDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionStationId"])),
+                            ProtocolNumber = reader["ProtocolNumber"].ToString(),
+                            Tachometer = Convert.ToInt32(reader["Tachometer"].ToString()),
+                            Price = Convert.ToDecimal(reader["Price"].ToString()),
+                            Defects = reader["Defects"].ToString()
+                        };
+                        result.Add(im);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Trace.WriteLine($"EXCEPTION: InspectionDbMapper.SelectAll: {e.Message}");
+                }
+                finally
+                {
+                    reader?.Close();
+                }
+            }
+
+            return result;
         }
     }
 }

@@ -27,7 +27,8 @@ namespace wpfapp
         private PageStatistics _pageStatistics;
         private PageVehicles _pageVehicles;
         private PageCreateVehicle _pageCreateVehicle;
-        private Page _pageFCE3;
+        private PageCreateInspection _pageCreateInspection;
+        private PageNotifications _pageNotifications;
 
         public MainWindow()
         {
@@ -104,6 +105,38 @@ namespace wpfapp
             {
                 _pageCreateVehicle = new PageCreateVehicle(_sqlConn, 1);
                 FrmModule.Content = _pageCreateVehicle;
+            }
+        }
+
+        private void BtnCreateInspection_Click(object sender, RoutedEventArgs e)
+        {
+            if (FrmModule.Content.Equals(_pageCreateInspection)) return;
+            RectSide.Margin = new Thickness(RectSide.Margin.Left, btnCreateInspection.Margin.Top, RectSide.Margin.Right, RectSide.Margin.Bottom);
+            if (_pageCreateInspection != null)
+            {
+                FrmModule.Content = _pageCreateInspection;
+                _pageCreateInspection.Refresh();
+            }
+            else
+            {
+                _pageCreateInspection = new PageCreateInspection(_sqlConn, 1);
+                FrmModule.Content = _pageCreateInspection;
+            }
+        }
+
+        private void BtnViewNotifications_Click(object sender, RoutedEventArgs e)
+        {
+            if (FrmModule.Content.Equals(_pageNotifications)) return;
+            RectSide.Margin = new Thickness(RectSide.Margin.Left, btnNotifications.Margin.Top, RectSide.Margin.Right, RectSide.Margin.Bottom);
+            if (_pageNotifications != null)
+            {
+                FrmModule.Content = _pageNotifications;
+                _pageNotifications.Refresh();
+            }
+            else
+            {
+                _pageNotifications = new PageNotifications(_sqlConn);
+                FrmModule.Content = _pageNotifications;
             }
         }
     }
