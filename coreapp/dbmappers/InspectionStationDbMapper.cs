@@ -5,9 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using testapp.models;
+using core.models;
 
-namespace testapp.dbmappers
+
+namespace core.dbmappers
 {
     public class InspectionStationDbMapper
     {
@@ -25,9 +26,9 @@ namespace testapp.dbmappers
         private static string delete = "DELETE FROM InspectionStations WHERE rowid=@Id";
 
 
-        public static List<InspectionStationModel> SelectAll(SQLiteConnection conn)
+        public static List<InspectionStation> SelectAll(SQLiteConnection conn)
         {
-            List<InspectionStationModel> result = new List<InspectionStationModel>();
+            List<InspectionStation> result = new List<InspectionStation>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
             {
                 SQLiteDataReader reader = null;
@@ -36,7 +37,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        InspectionStationModel ism = new InspectionStationModel()
+                        InspectionStation ism = new InspectionStation()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             Active = Convert.ToBoolean(reader["Active"]),
@@ -68,7 +69,7 @@ namespace testapp.dbmappers
             return result;
         }
 
-        public static InspectionStationModel SelectById(SQLiteConnection conn, int id)
+        public static InspectionStation SelectById(SQLiteConnection conn, int id)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
             {
@@ -79,7 +80,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        InspectionStationModel ism = new InspectionStationModel()
+                        InspectionStation ism = new InspectionStation()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             Active = Convert.ToBoolean(reader["Active"]),
@@ -108,7 +109,7 @@ namespace testapp.dbmappers
             return null;
         }
 
-        public static int Insert(SQLiteConnection conn, InspectionStationModel im)
+        public static int Insert(SQLiteConnection conn, InspectionStation im)
         {
             if (im == null) return -2;
 
@@ -142,7 +143,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Update(SQLiteConnection conn, InspectionStationModel im)
+        public static int Update(SQLiteConnection conn, InspectionStation im)
         {
             if (im == null) return -2;
             if (im.Id < 0) return -3;
@@ -176,7 +177,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Delete(SQLiteConnection conn, InspectionStationModel im)
+        public static int Delete(SQLiteConnection conn, InspectionStation im)
         {
             if (im == null) return -2;
             if (im.Id < 0) return -3;

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
-using coreapp;
-using coreapp.models;
+using core;
+using core.dbmappers;
+using core.models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using testapp.dbmappers;
 
 namespace mvcapp.Controllers
 {
@@ -19,7 +19,7 @@ namespace mvcapp.Controllers
         public ActionResult Index()
         {
             sqlconn.Open();
-            List<UserDriverModel> drivers = UserDriverDbMapper.SelectAll(sqlconn);
+            List<UserDriver> drivers = UserDriverDbMapper.SelectAll(sqlconn);
             sqlconn.Close();
             return View(drivers);
         }
@@ -28,7 +28,7 @@ namespace mvcapp.Controllers
         public ActionResult Details(int id)
         {
             sqlconn.Open();
-            UserDriverModel driver = UserDriverDbMapper.SelectById(sqlconn, id);
+            UserDriver driver = UserDriverDbMapper.SelectById(sqlconn, id);
             sqlconn.Close();
             return View(driver);
         }
@@ -42,7 +42,7 @@ namespace mvcapp.Controllers
         // POST: Drivers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(UserDriverModel driver)
+        public ActionResult Create(UserDriver driver)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace mvcapp.Controllers
         public ActionResult Edit(int id)
         {
             sqlconn.Open();
-            UserDriverModel driver = UserDriverDbMapper.SelectById(sqlconn, id);
+            UserDriver driver = UserDriverDbMapper.SelectById(sqlconn, id);
             sqlconn.Close();
             return View(driver);
         }
@@ -72,7 +72,7 @@ namespace mvcapp.Controllers
         // POST: Drivers/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, UserDriverModel driver)
+        public ActionResult Edit(int id, UserDriver driver)
         {
             try
             {
@@ -94,7 +94,7 @@ namespace mvcapp.Controllers
         public ActionResult Delete(int id)
         {
             sqlconn.Open();
-            UserDriverModel driver = UserDriverDbMapper.SelectById(sqlconn, id);
+            UserDriver driver = UserDriverDbMapper.SelectById(sqlconn, id);
             sqlconn.Close();
 
             return View(driver);
@@ -103,7 +103,7 @@ namespace mvcapp.Controllers
         // POST: Drivers/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, UserDriverModel driver)
+        public ActionResult Delete(int id, UserDriver driver)
         {
             try
             {

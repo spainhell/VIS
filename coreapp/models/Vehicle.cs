@@ -5,17 +5,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using coreapp.models;
 
-namespace testapp.models
+
+namespace core.models
 {
-    public class VehicleModel
+    public class Vehicle
     {
         public int Id { get; set; }
         [Required]
-        public VehicleTypeModel VehicleType { get; set; }
+        public VehicleType VehicleType { get; set; }
         [Required]
-        public VehicleBrandModel VehicleBrand { get; set; }
+        public VehicleBrand VehicleBrand { get; set; }
         
         [DisplayName("Název")]
         [Required]
@@ -31,9 +31,9 @@ namespace testapp.models
         [Required]
         public decimal Price { get; set; }
         [Required]
-        public UserDriverModel Driver { get; set; }
+        public UserDriver Driver { get; set; }
         [Required]
-        public UserBossModel Boss { get; set; }
+        public UserBoss Boss { get; set; }
 
         public int? VehicleTypeId { get; set; }
         public int? VehicleBrandId { get; set; }

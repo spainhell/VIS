@@ -5,10 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using coreapp.models;
-using testapp.models;
+using core.models;
 
-namespace testapp.dbmappers
+
+namespace core.dbmappers
 {
     public class UserDriverDbMapper
     {
@@ -26,9 +26,9 @@ namespace testapp.dbmappers
         private static string delete = "DELETE FROM Users WHERE rowid=@Id";
 
 
-        public static List<UserDriverModel> SelectAll(SQLiteConnection conn)
+        public static List<UserDriver> SelectAll(SQLiteConnection conn)
         {
-            List<UserDriverModel> result = new List<UserDriverModel>();
+            List<UserDriver> result = new List<UserDriver>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
             {
                 SQLiteDataReader reader = null;
@@ -37,7 +37,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        UserDriverModel um = new UserDriverModel()
+                        UserDriver um = new UserDriver()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             FirstName = reader["FirstName"].ToString(),
@@ -66,7 +66,7 @@ namespace testapp.dbmappers
             return result;
         }
 
-        public static UserDriverModel SelectById(SQLiteConnection conn, int id)
+        public static UserDriver SelectById(SQLiteConnection conn, int id)
         {
             if (id < 0) return null;
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
@@ -78,7 +78,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        UserDriverModel um = new UserDriverModel()
+                        UserDriver um = new UserDriver()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             FirstName = reader["FirstName"].ToString(),
@@ -104,7 +104,7 @@ namespace testapp.dbmappers
             return null;
         }
 
-        public static int Insert(SQLiteConnection conn, UserDriverModel um)
+        public static int Insert(SQLiteConnection conn, UserDriver um)
         {
             if (um == null) return -2;
 
@@ -133,7 +133,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Update(SQLiteConnection conn, UserDriverModel um)
+        public static int Update(SQLiteConnection conn, UserDriver um)
         {
             if (um == null) return -2;
             if (um.Id < 0) return -3;
@@ -164,7 +164,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Delete(SQLiteConnection conn, UserDriverModel vm)
+        public static int Delete(SQLiteConnection conn, UserDriver vm)
         {
             if (vm == null) return -2;
             if (vm.Id < 0) return -3;

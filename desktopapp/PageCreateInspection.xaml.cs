@@ -57,7 +57,7 @@ namespace wpfapp
         {
             try
             {
-                InspectionModel im = new InspectionModel()
+                Inspection im = new Inspection()
                 {
                     Id = -1,
                     Vehicle = VehicleDbMapper.SelectById(_sqlConn, Convert.ToInt32(cbVehicle.SelectedValue)),

@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace testapp.models
+namespace core.models
 {
-    public class InspectionModel
+    public class Inspection
     {
         public int Id { get; set; }
-        public VehicleModel Vehicle { get; set; }
+        public Vehicle Vehicle { get; set; }
         public DateTime InspectionDate { get; set; }
         public DateTime ValidTo { get; set; }
-        public InspectionStationModel InspectionStation { get; set; }
+        public InspectionStation InspectionStation { get; set; }
         public string ProtocolNumber { get; set; }
         public int Tachometer { get; set; }
         public decimal Price { get; set; }

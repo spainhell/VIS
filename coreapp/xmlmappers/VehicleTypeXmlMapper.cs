@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
-using testapp.models;
+using core.models;
 
-namespace testapp.xmlmappers
+
+namespace core.xmlmappers
 {
     public class VehicleTypeXmlMapper
     {
-        public static List<VehicleTypeModel> SelectAll(string filename)
+        public static List<VehicleType> SelectAll(string filename)
         {
-            List<VehicleTypeModel> vtmList = new List<VehicleTypeModel>();
+            List<VehicleType> vtmList = new List<VehicleType>();
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(filename);
@@ -18,7 +19,7 @@ namespace testapp.xmlmappers
 
             foreach (XmlNode record in list)
             {
-                VehicleTypeModel vtm = new VehicleTypeModel()
+                VehicleType vtm = new VehicleType()
                 {
                     Id = Convert.ToInt32(record.Attributes?["id"].Value),
                     TypeName = record.SelectSingleNode("TypeName")?.InnerText
@@ -30,7 +31,7 @@ namespace testapp.xmlmappers
             return vtmList;
         }
 
-        public static VehicleTypeModel SelectById(string filename, int id)
+        public static VehicleType SelectById(string filename, int id)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(filename);
@@ -39,7 +40,7 @@ namespace testapp.xmlmappers
 
             if (node == null) return null;
 
-            VehicleTypeModel vtm = new VehicleTypeModel()
+            VehicleType vtm = new VehicleType()
             {
                 Id = id,
                 TypeName = node.SelectSingleNode("TypeName")?.InnerText
@@ -49,7 +50,7 @@ namespace testapp.xmlmappers
 
         
 
-        public static int Insert(string filename, VehicleTypeModel vtm)
+        public static int Insert(string filename, VehicleType vtm)
         {
             if (vtm == null) return -2;
 
@@ -94,7 +95,7 @@ namespace testapp.xmlmappers
             return maxId;
         }
 
-        public static int Update(string filename, VehicleTypeModel vtm)
+        public static int Update(string filename, VehicleType vtm)
         {
             if (vtm == null) return -2;
             if (vtm.Id < 0) return -3;
@@ -114,7 +115,7 @@ namespace testapp.xmlmappers
             return 0;
         }
 
-        public static int Delete(string filename, VehicleTypeModel vtm)
+        public static int Delete(string filename, VehicleType vtm)
         {
             if (vtm == null) return -2;
             if (vtm.Id < 0) return -3;

@@ -6,9 +6,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using testapp.models;
+using core.models;
 
-namespace testapp.dbmappers
+
+
+namespace core.dbmappers
 {
     public class NotificationDbMapper
     {
@@ -30,9 +32,9 @@ namespace testapp.dbmappers
             "JOIN Vehicles V ON I.VehicleId = V.rowid WHERE julianday(I.ValidTo) - julianday('now') < @days " +
             "AND I.rowid NOT IN (SELECT InspectionId FROM Notifications)";
 
-        public static List<NotificationModel> SelectAll(SQLiteConnection conn)
+        public static List<Notification> SelectAll(SQLiteConnection conn)
         {
-            List<NotificationModel> result = new List<NotificationModel>();
+            List<Notification> result = new List<Notification>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
             {
                 SQLiteDataReader reader = null;
@@ -41,7 +43,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        NotificationModel nm = new NotificationModel()
+                        Notification nm = new Notification()
                         {
                             Id = Convert.ToInt32(reader["Id"].ToString()),
                             Inspection = InspectionDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionId"])),
@@ -65,7 +67,7 @@ namespace testapp.dbmappers
             return result;
         }
 
-        public static NotificationModel SelectById(SQLiteConnection conn, int id)
+        public static Notification SelectById(SQLiteConnection conn, int id)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
             {
@@ -76,7 +78,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        NotificationModel nm = new NotificationModel()
+                        Notification nm = new Notification()
                         {
                             Id = Convert.ToInt32(reader["Id"].ToString()),
                             Inspection = InspectionDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionId"])),
@@ -97,7 +99,7 @@ namespace testapp.dbmappers
             return null;
         }
 
-        public static NotificationModel SelectByInspectionId(SQLiteConnection conn, int inspectionId)
+        public static Notification SelectByInspectionId(SQLiteConnection conn, int inspectionId)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(selectByInspectionId, conn))
             {
@@ -108,7 +110,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        NotificationModel nm = new NotificationModel()
+                        Notification nm = new Notification()
                         {
                             Id = Convert.ToInt32(reader["Id"].ToString()),
                             Inspection = InspectionDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionId"])),
@@ -129,7 +131,7 @@ namespace testapp.dbmappers
             return null;
         }
 
-        public static int Insert(SQLiteConnection conn, NotificationModel nm)
+        public static int Insert(SQLiteConnection conn, Notification nm)
         {
             if (nm == null) return -2;
 
@@ -153,7 +155,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Update(SQLiteConnection conn, NotificationModel nm)
+        public static int Update(SQLiteConnection conn, Notification nm)
         {
             if (nm == null) return -2;
             if (nm.Id < 0) return -3;
@@ -179,7 +181,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Delete(SQLiteConnection conn, NotificationModel nm)
+        public static int Delete(SQLiteConnection conn, Notification nm)
         {
             if (nm == null) return -2;
             if (nm.Id < 0) return -3;
@@ -201,9 +203,9 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static List<NotificationModel> GenerateNotifications(SQLiteConnection conn, int days)
+        public static List<Notification> GenerateNotifications(SQLiteConnection conn, int days)
         {
-            List<NotificationModel> result = new List<NotificationModel>();
+            List<Notification> result = new List<Notification>();
             using (SQLiteCommand cmd = new SQLiteCommand(generateNotifications, conn))
             {
                 cmd.Parameters.AddWithValue("@days", days);
@@ -213,7 +215,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        NotificationModel nm = new NotificationModel()
+                        Notification nm = new Notification()
                         {
                             Id = -1,
                             Inspection = InspectionDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionId"])),

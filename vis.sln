@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "coreapp", "coreapp\coreapp.csproj", "{05AE1331-D24E-478E-81A0-4B6DFE4EC754}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "core", "coreapp\core.csproj", "{05AE1331-D24E-478E-81A0-4B6DFE4EC754}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "desktopapp", "desktopapp\desktopapp.csproj", "{E030DA24-12E8-4678-B4CC-47332B75886D}"
 EndProject

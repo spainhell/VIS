@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
-using coreapp;
-using coreapp.models;
+using core;
+using core.dbmappers;
+using core.models;
+using core.xmlmappers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using testapp.dbmappers;
-using testapp.models;
-using testapp.xmlmappers;
+
 
 namespace mvcapp.Controllers
 {
@@ -21,7 +21,7 @@ namespace mvcapp.Controllers
         public ActionResult Index()
         {
             sqlconn.Open();
-            List<VehicleModel> vehicles = VehicleDbMapper.SelectAll(sqlconn);
+            List<Vehicle> vehicles = VehicleDbMapper.SelectAll(sqlconn);
             sqlconn.Close();
 
             return View(vehicles);
@@ -31,7 +31,7 @@ namespace mvcapp.Controllers
         public ActionResult Details(int id)
         {
             sqlconn.Open();
-            VehicleModel vehicle = VehicleDbMapper.SelectById(sqlconn, id);
+            Vehicle vehicle = VehicleDbMapper.SelectById(sqlconn, id);
             sqlconn.Close();
             return View(vehicle);
         }
@@ -40,11 +40,11 @@ namespace mvcapp.Controllers
         public ActionResult Create()
         {
             sqlconn.Open();
-            List<VehicleTypeModel> types = VehicleTypeXmlMapper.SelectAll(appconfig.xmlTypes);
-            List<VehicleBrandModel> brands = VehicleBrandXmlMapper.SelectAll(appconfig.xmlBrands);
+            List<VehicleType> types = VehicleTypeXmlMapper.SelectAll(appconfig.xmlTypes);
+            List<VehicleBrand> brands = VehicleBrandXmlMapper.SelectAll(appconfig.xmlBrands);
 
-            List<UserDriverModel> drivers = UserDriverDbMapper.SelectAll(sqlconn);
-            List<UserBossModel> bosses = UserBossDbMapper.SelectAll(sqlconn);
+            List<UserDriver> drivers = UserDriverDbMapper.SelectAll(sqlconn);
+            List<UserBoss> bosses = UserBossDbMapper.SelectAll(sqlconn);
 
             sqlconn.Close();
 
@@ -59,7 +59,7 @@ namespace mvcapp.Controllers
         // POST: Vehicles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VehicleModel vehicle)
+        public ActionResult Create(Vehicle vehicle)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace mvcapp.Controllers
         public ActionResult Delete(int id)
         {
             sqlconn.Open();
-            VehicleModel vehicle = VehicleDbMapper.SelectById(sqlconn, id);
+            Vehicle vehicle = VehicleDbMapper.SelectById(sqlconn, id);
             sqlconn.Close();
 
             return View(vehicle);
@@ -123,12 +123,12 @@ namespace mvcapp.Controllers
         // POST: Vehicles/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, VehicleModel vehicle)
+        public ActionResult Delete(int id, Vehicle vehicle)
         {
             try
             {
                 sqlconn.Open();
-                List<InspectionModel> inspections = InspectionDbMapper.SelectAllByVehicleId(sqlconn, id);
+                List<Inspection> inspections = InspectionDbMapper.SelectAllByVehicleId(sqlconn, id);
                 sqlconn.Close();
 
                 if (inspections.Count > 0) return View(vehicle);

@@ -5,10 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using coreapp.models;
-using testapp.models;
+using core.models;
 
-namespace testapp.dbmappers
+
+namespace core.dbmappers
 {
     public class UserBossDbMapper
     {
@@ -35,9 +35,9 @@ namespace testapp.dbmappers
         private static string deleteUB = "DELETE FROM UserBosses WHERE rowid=@Id";
 
 
-        public static List<UserBossModel> SelectAll(SQLiteConnection conn)
+        public static List<UserBoss> SelectAll(SQLiteConnection conn)
         {
-            List<UserBossModel> result = new List<UserBossModel>();
+            List<UserBoss> result = new List<UserBoss>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
             {
                 SQLiteDataReader reader = null;
@@ -46,7 +46,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        UserBossModel um = new UserBossModel()
+                        UserBoss um = new UserBoss()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             FirstName = reader["FirstName"].ToString(),
@@ -76,7 +76,7 @@ namespace testapp.dbmappers
             return result;
         }
 
-        public static UserBossModel SelectById(SQLiteConnection conn, int id)
+        public static UserBoss SelectById(SQLiteConnection conn, int id)
         {
             if (id < 0) return null;
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
@@ -88,7 +88,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        UserBossModel um = new UserBossModel()
+                        UserBoss um = new UserBoss()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             FirstName = reader["FirstName"].ToString(),
@@ -115,7 +115,7 @@ namespace testapp.dbmappers
             return null;
         }
 
-        public static int Insert(SQLiteConnection conn, UserBossModel um)
+        public static int Insert(SQLiteConnection conn, UserBoss um)
         {
             if (um == null) return -2;
 
@@ -172,7 +172,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Update(SQLiteConnection conn, UserBossModel um)
+        public static int Update(SQLiteConnection conn, UserBoss um)
         {
             if (um == null) return -2;
             if (um.Id < 0) return -3;
@@ -219,7 +219,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Delete(SQLiteConnection conn, UserBossModel ub)
+        public static int Delete(SQLiteConnection conn, UserBoss ub)
         {
             if (ub == null) return -2;
             if (ub.Id < 0) return -3;

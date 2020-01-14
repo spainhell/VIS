@@ -5,10 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using coreapp.models;
-using testapp.models;
+using core.models;
 
-namespace testapp.dbmappers
+
+namespace core.dbmappers
 {
     public class UserAdminDbMapper
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace coreapp
+namespace core
 {
     public static class appconfig
     {

@@ -5,11 +5,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using core.models;
+using core.xmlmappers;
 using coreapp;
-using testapp.models;
-using testapp.xmlmappers;
 
-namespace testapp.dbmappers
+namespace core.dbmappers
 {
     public class VehicleDbMapper
     {
@@ -34,9 +34,9 @@ namespace testapp.dbmappers
         private static string delete = "DELETE FROM Vehicles WHERE rowid=@Id";
 
 
-        public static List<VehicleModel> SelectAll(SQLiteConnection conn)
+        public static List<Vehicle> SelectAll(SQLiteConnection conn)
         {
-            List<VehicleModel> result = new List<VehicleModel>();
+            List<Vehicle> result = new List<Vehicle>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
             {
                 SQLiteDataReader reader = null;
@@ -45,7 +45,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        VehicleModel vm = new VehicleModel()
+                        Vehicle vm = new Vehicle()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             VehicleType = VehicleTypeXmlMapper.SelectById(appconfig.xmlTypes, Convert.ToInt32(reader["VehicleTypeId"])),
@@ -75,7 +75,7 @@ namespace testapp.dbmappers
             return result;
         }
 
-        public static VehicleModel SelectById(SQLiteConnection conn, int id)
+        public static Vehicle SelectById(SQLiteConnection conn, int id)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
             {
@@ -86,7 +86,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        VehicleModel vm = new VehicleModel()
+                        Vehicle vm = new Vehicle()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             VehicleType = VehicleTypeXmlMapper.SelectById(appconfig.xmlTypes, Convert.ToInt32(reader["VehicleTypeId"])),
@@ -113,7 +113,7 @@ namespace testapp.dbmappers
             return null;
         }
 
-        public static int Insert(SQLiteConnection conn, VehicleModel vm)
+        public static int Insert(SQLiteConnection conn, Vehicle vm)
         {
             if (vm == null) return -2;
 
@@ -143,7 +143,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Update(SQLiteConnection conn, VehicleModel vm)
+        public static int Update(SQLiteConnection conn, Vehicle vm)
         {
             if (vm == null) return -2;
             if (vm.Id < 0) return -3;
@@ -175,7 +175,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Delete(SQLiteConnection conn, VehicleModel vm)
+        public static int Delete(SQLiteConnection conn, Vehicle vm)
         {
             if (vm == null) return -2;
             if (vm.Id < 0) return -3;

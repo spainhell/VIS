@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
-using testapp.models;
+using core.models;
 
-namespace testapp.xmlmappers
+
+namespace core.xmlmappers
 {
     public class VehicleBrandXmlMapper
     {
-        public static List<VehicleBrandModel> SelectAll(string filename)
+        public static List<VehicleBrand> SelectAll(string filename)
         {
-            List<VehicleBrandModel> vbmList = new List<VehicleBrandModel>();
+            List<VehicleBrand> vbmList = new List<VehicleBrand>();
 
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(filename);
@@ -18,7 +19,7 @@ namespace testapp.xmlmappers
 
             foreach (XmlNode record in list)
             {
-                VehicleBrandModel vtm = new VehicleBrandModel()
+                VehicleBrand vtm = new VehicleBrand()
                 {
                     Id = Convert.ToInt32(record.Attributes?["id"].Value),
                     BrandName = record.SelectSingleNode("BrandName")?.InnerText,
@@ -30,7 +31,7 @@ namespace testapp.xmlmappers
             return vbmList;
         }
 
-        public static VehicleBrandModel SelectById(string filename, int id)
+        public static VehicleBrand SelectById(string filename, int id)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(filename);
@@ -39,7 +40,7 @@ namespace testapp.xmlmappers
 
             if (node == null) return null;
 
-            VehicleBrandModel vtm = new VehicleBrandModel()
+            VehicleBrand vtm = new VehicleBrand()
             {
                 Id = id,
                 BrandName = node.SelectSingleNode("BrandName")?.InnerText,
@@ -48,7 +49,7 @@ namespace testapp.xmlmappers
             return vtm;
         }
 
-        public static int Insert(string filename, VehicleBrandModel vbm)
+        public static int Insert(string filename, VehicleBrand vbm)
         {
             if (vbm == null) return -2;
 
@@ -98,7 +99,7 @@ namespace testapp.xmlmappers
             return maxId;
         }
 
-        public static int Update(string filename, VehicleBrandModel vbm)
+        public static int Update(string filename, VehicleBrand vbm)
         {
             if (vbm == null) return -2;
             if (vbm.Id < 0) return -3;
@@ -121,7 +122,7 @@ namespace testapp.xmlmappers
             return 0;
         }
 
-        public static int Delete(string filename, VehicleBrandModel vbm)
+        public static int Delete(string filename, VehicleBrand vbm)
         {
             if (vbm == null) return -2;
             if (vbm.Id < 0) return -3;

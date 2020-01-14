@@ -1,18 +1,17 @@
-﻿@using coreapp.models
-@using testapp.models
-@model testapp.models.VehicleModel
+﻿@using core.models
+@model core.models.Vehicle
 
 @{
     ViewData["Title"] = "Create";
-    List<VehicleTypeModel> types = (List<VehicleTypeModel>) ViewData["vehicleTypes"];
-    List<VehicleBrandModel> brands = (List<VehicleBrandModel>) ViewData["vehicleBrands"];
-    List<UserDriverModel> drivers = (List<UserDriverModel>) ViewData["drivers"];
-    List<UserBossModel> bosses = (List<UserBossModel>) ViewData["bosses"];
+    List<VehicleType> types = (List<VehicleType>) ViewData["vehicleTypes"];
+    List<VehicleBrand> brands = (List<VehicleBrand>) ViewData["vehicleBrands"];
+    List<UserDriver> drivers = (List<UserDriver>) ViewData["drivers"];
+    List<UserBoss> bosses = (List<UserBoss>) ViewData["bosses"];
 }
 
 <h1>Create</h1>
 
-<h4>VehicleModel</h4>
+<h4>Vehicle</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">

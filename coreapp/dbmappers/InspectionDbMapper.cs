@@ -5,9 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using testapp.models;
+using core.models;
 
-namespace testapp.dbmappers
+
+namespace core.dbmappers
 {
     public class InspectionDbMapper
     {
@@ -30,9 +31,9 @@ namespace testapp.dbmappers
 
         private static string delete = "DELETE FROM Inspections WHERE rowid=@Id";
 
-        public static List<InspectionModel> SelectAll(SQLiteConnection conn)
+        public static List<Inspection> SelectAll(SQLiteConnection conn)
         {
-            List<InspectionModel> result = new List<InspectionModel>();
+            List<Inspection> result = new List<Inspection>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
             {
                 SQLiteDataReader reader = null;
@@ -41,7 +42,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        InspectionModel im = new InspectionModel()
+                        Inspection im = new Inspection()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             Vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"])),
@@ -69,7 +70,7 @@ namespace testapp.dbmappers
             return result;
         }
 
-        public static InspectionModel SelectById(SQLiteConnection conn, int id)
+        public static Inspection SelectById(SQLiteConnection conn, int id)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
             {
@@ -80,7 +81,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        InspectionModel im = new InspectionModel()
+                        Inspection im = new Inspection()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             Vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"])),
@@ -105,9 +106,9 @@ namespace testapp.dbmappers
             return null;
         }
 
-        public static List<InspectionModel> SelectAllByVehicleId(SQLiteConnection conn, int id)
+        public static List<Inspection> SelectAllByVehicleId(SQLiteConnection conn, int id)
         {
-            List<InspectionModel> result = new List<InspectionModel>();
+            List<Inspection> result = new List<Inspection>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAllByVehicleId, conn))
             {
                 cmd.Parameters.AddWithValue("@Id", id);
@@ -118,7 +119,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        InspectionModel im = new InspectionModel()
+                        Inspection im = new Inspection()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             Vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"])),
@@ -146,7 +147,7 @@ namespace testapp.dbmappers
             return result;
         }
 
-        public static int Insert(SQLiteConnection conn, InspectionModel im)
+        public static int Insert(SQLiteConnection conn, Inspection im)
         {
             if (im == null) return -2;
 
@@ -174,7 +175,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Update(SQLiteConnection conn, InspectionModel im)
+        public static int Update(SQLiteConnection conn, Inspection im)
         {
             if (im == null) return -2;
             if (im.Id < 0) return -3;
@@ -204,7 +205,7 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static int Delete(SQLiteConnection conn, InspectionModel im)
+        public static int Delete(SQLiteConnection conn, Inspection im)
         {
             if (im == null) return -2;
             if (im.Id < 0) return -3;
@@ -226,9 +227,9 @@ namespace testapp.dbmappers
             return 0;
         }
 
-        public static List<InspectionModel> SelectAllByVehicleAdminId(SQLiteConnection conn, int adminId)
+        public static List<Inspection> SelectAllByVehicleAdminId(SQLiteConnection conn, int adminId)
         {
-            List<InspectionModel> result = new List<InspectionModel>();
+            List<Inspection> result = new List<Inspection>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
             {
                 SQLiteDataReader reader = null;
@@ -238,7 +239,7 @@ namespace testapp.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
-                        InspectionModel im = new InspectionModel()
+                        Inspection im = new Inspection()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
                             Vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"])),

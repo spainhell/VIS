@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using testapp.models;
 
-namespace coreapp.models
+
+namespace core.models
 {
-    public class UserDriverModel : UserModel
+    public class UserDriver : User
     {
         public DateTime QualificationTo { get; set; }
     }

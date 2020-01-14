@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace testapp.models
+namespace core.models
 {
-    public class InspectionStationModel
+    public class InspectionStation
     {
         public int Id { get; set; }
         public bool Active { get; set; }

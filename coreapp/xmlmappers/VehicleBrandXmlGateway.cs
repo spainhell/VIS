@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml;
-using coreapp;
+using core;
 
 
 namespace coreapp.xmlmappers

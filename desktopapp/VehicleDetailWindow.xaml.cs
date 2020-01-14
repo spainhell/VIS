@@ -48,9 +48,9 @@ namespace wpfapp
             tbBrand.Text = _vehicle.VehicleBrand.BrandName;
             tbVintage.Text = _vehicle.Vintage.ToString();
 
-            List<InspectionModel> inspections = InspectionDbMapper.SelectAllByVehicleId(_sqlConn, _vehicle.Id);
+            List<Inspection> inspections = InspectionDbMapper.SelectAllByVehicleId(_sqlConn, _vehicle.Id);
 
-            List<InspectionModel> sortedInspections = inspections.OrderByDescending(c => c.InspectionDate).ToList();
+            List<Inspection> sortedInspections = inspections.OrderByDescending(c => c.InspectionDate).ToList();
 
             if (sortedInspections.Count == 0) return;
 
@@ -67,11 +67,11 @@ namespace wpfapp
             if (mb == MessageBoxResult.No) return;
 
             // vyhledání tech. kontrol
-            List<InspectionModel> inspections = InspectionDbMapper.SelectAllByVehicleId(_sqlConn, _vehicle.Id);
+            List<Inspection> inspections = InspectionDbMapper.SelectAllByVehicleId(_sqlConn, _vehicle.Id);
 
             // vyhlednání všech notifikací
             List<NotificationModel> notifications = new List<NotificationModel>(inspections.Count);
-            foreach (InspectionModel inspection in inspections)
+            foreach (Inspection inspection in inspections)
             {
                 NotificationModel insNotify = NotificationDbMapper.SelectByInspectionId(_sqlConn, inspection.Id);
                 if (insNotify != null) notifications.Add(insNotify);
@@ -84,7 +84,7 @@ namespace wpfapp
             }
 
             // smazání všech tech. kontrol
-            foreach (InspectionModel inspection in inspections)
+            foreach (Inspection inspection in inspections)
             {
                 InspectionDbMapper.Delete(_sqlConn, inspection);
             }

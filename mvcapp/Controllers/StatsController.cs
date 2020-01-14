@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
-using coreapp;
+using core;
+using core.dbmappers;
+using core.models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using testapp.dbmappers;
-using testapp.models;
+
 
 namespace mvcapp.Controllers
 {
@@ -21,11 +22,11 @@ namespace mvcapp.Controllers
             sqlconn.Open();
             long vehiclesCount = VehicleDbMapper.SelectVehiclesByAdminId(sqlconn, 1);
             long driversCount = VehicleDbMapper.SelectDriversCountByAdminId(sqlconn, 1);
-            List<InspectionModel> inspections = InspectionDbMapper.SelectAllByVehicleAdminId(sqlconn, 1);
+            List<Inspection> inspections = InspectionDbMapper.SelectAllByVehicleAdminId(sqlconn, 1);
             sqlconn.Close();
 
             int inspectionsCount = 0;
-            foreach (InspectionModel inspection in inspections)
+            foreach (Inspection inspection in inspections)
             {
                 int days = (inspection.ValidTo - DateTime.Now).Days;
                 if (days <= 30) inspectionsCount++;

@@ -27,7 +27,7 @@ namespace wpfapp
 
         private void DgVehicles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //_selectedVehicle = DgNotifications.SelectedItem as VehicleModel;
+            //_selectedVehicle = DgNotifications.SelectedItem as Vehicle;
             //BtnDetail.IsEnabled = true;
         }
 
