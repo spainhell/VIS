@@ -44,5 +44,6 @@ namespace testapp.models
         {
             return $"ID VOZIDLA: {Id}\nNázev: {Title}\nSPZ:  {LicensePlate}";
         }
+
     }
 }

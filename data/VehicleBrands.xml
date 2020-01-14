@@ -16,4 +16,8 @@
     <BrandName>Honda</BrandName>
     <LogoUrl>http://www.honda.cz</LogoUrl>
   </VehicleBrand>
+  <VehicleBrand id="5">
+    <BrandName>Karosa</BrandName>
+    <LogoUrl>http://www.karosa.cz</LogoUrl>
+  </VehicleBrand>
 </VehicleBrands>
