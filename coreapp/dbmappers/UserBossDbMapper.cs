@@ -12,6 +12,7 @@ namespace core.dbmappers
 {
     public class UserBossDbMapper
     {
+        private static SQLiteConnection conn = new SQLiteConnection(appconfig.sqlite);
         private static string selectAll = "SELECT UB.rowid, * FROM UserBosses UB INNER JOIN Users U " +
                                           "WHERE UB.UserId = U.rowid AND CanManageUsers IS NULL and CanManageNotifications IS NULL and CanManageStations IS NULL";
         private static string selectById = selectAll + " AND UB.rowid=@Id";
@@ -35,7 +36,7 @@ namespace core.dbmappers
         private static string deleteUB = "DELETE FROM UserBosses WHERE rowid=@Id";
 
 
-        public static List<UserBoss> SelectAll(SQLiteConnection conn)
+        public static List<UserBoss> SelectAll()
         {
             List<UserBoss> result = new List<UserBoss>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
@@ -76,7 +77,7 @@ namespace core.dbmappers
             return result;
         }
 
-        public static UserBoss SelectById(SQLiteConnection conn, int id)
+        public static UserBoss SelectById(int id)
         {
             if (id < 0) return null;
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
@@ -115,7 +116,7 @@ namespace core.dbmappers
             return null;
         }
 
-        public static int Insert(SQLiteConnection conn, UserBoss um)
+        public static int Insert(UserBoss um)
         {
             if (um == null) return -2;
 
@@ -172,7 +173,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Update(SQLiteConnection conn, UserBoss um)
+        public static int Update(UserBoss um)
         {
             if (um == null) return -2;
             if (um.Id < 0) return -3;
@@ -219,7 +220,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Delete(SQLiteConnection conn, UserBoss ub)
+        public static int Delete(UserBoss ub)
         {
             if (ub == null) return -2;
             if (ub.Id < 0) return -3;
@@ -240,7 +241,7 @@ namespace core.dbmappers
 
             using (SQLiteCommand cmd = new SQLiteCommand(deleteU, conn))
             {
-                cmd.Parameters.AddWithValue("@Id", GetUserIdFromBossId(conn, ub.Id));
+                cmd.Parameters.AddWithValue("@Id", GetUserIdFromBossId(ub.Id));
                 try
                 {
                     cmd.ExecuteNonQuery();
@@ -254,7 +255,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int GetUserIdFromBossId(SQLiteConnection conn, int BossId)
+        public static int GetUserIdFromBossId(int BossId)
         {
             using (SQLiteCommand cmd = new SQLiteCommand($"SELECT UserId FROM UserBosses WHERE rowid={BossId}", conn))
             {

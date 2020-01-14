@@ -12,6 +12,7 @@ namespace core.dbmappers
 {
     public class UserDriverDbMapper
     {
+        private static SQLiteConnection conn = new SQLiteConnection(appconfig.sqlite);
         private static string selectAll = "SELECT rowid, * FROM Users WHERE rowid NOT IN (SELECT UserId FROM UserBosses)";
         private static string selectById = "SELECT rowid, * FROM Users WHERE rowid=@Id";
 
@@ -26,7 +27,7 @@ namespace core.dbmappers
         private static string delete = "DELETE FROM Users WHERE rowid=@Id";
 
 
-        public static List<UserDriver> SelectAll(SQLiteConnection conn)
+        public static List<UserDriver> SelectAll()
         {
             List<UserDriver> result = new List<UserDriver>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
@@ -66,7 +67,7 @@ namespace core.dbmappers
             return result;
         }
 
-        public static UserDriver SelectById(SQLiteConnection conn, int id)
+        public static UserDriver SelectById(int id)
         {
             if (id < 0) return null;
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
@@ -104,7 +105,7 @@ namespace core.dbmappers
             return null;
         }
 
-        public static int Insert(SQLiteConnection conn, UserDriver um)
+        public static int Insert(UserDriver um)
         {
             if (um == null) return -2;
 
@@ -133,7 +134,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Update(SQLiteConnection conn, UserDriver um)
+        public static int Update(UserDriver um)
         {
             if (um == null) return -2;
             if (um.Id < 0) return -3;
@@ -164,7 +165,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Delete(SQLiteConnection conn, UserDriver vm)
+        public static int Delete(UserDriver vm)
         {
             if (vm == null) return -2;
             if (vm.Id < 0) return -3;

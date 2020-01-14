@@ -12,6 +12,7 @@ namespace core.dbmappers
 {
     public class InspectionDbMapper
     {
+        private static SQLiteConnection conn = new SQLiteConnection(appconfig.sqlite);
         private static string selectAll = "SELECT rowid, * FROM Inspections";
         private static string selectById = "SELECT rowid, * FROM Inspections WHERE rowid=@Id";
 
@@ -31,7 +32,7 @@ namespace core.dbmappers
 
         private static string delete = "DELETE FROM Inspections WHERE rowid=@Id";
 
-        public static List<Inspection> SelectAll(SQLiteConnection conn)
+        public static List<Inspection> SelectAll()
         {
             List<Inspection> result = new List<Inspection>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
@@ -45,7 +46,7 @@ namespace core.dbmappers
                         Inspection im = new Inspection()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
-                            Vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"])),
+                            Vehicle = VehicleDbMapper.SelectById(Convert.ToInt32(reader["VehicleId"])),
                             InspectionDate = Convert.ToDateTime(reader["InspectionDate"]),
                             ValidTo = Convert.ToDateTime(reader["ValidTo"]),
                             InspectionStation = InspectionStationDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionStationId"])),
@@ -70,7 +71,7 @@ namespace core.dbmappers
             return result;
         }
 
-        public static Inspection SelectById(SQLiteConnection conn, int id)
+        public static Inspection SelectById(int id)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
             {
@@ -84,7 +85,7 @@ namespace core.dbmappers
                         Inspection im = new Inspection()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
-                            Vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"])),
+                            Vehicle = VehicleDbMapper.SelectById(Convert.ToInt32(reader["VehicleId"])),
                             InspectionDate = Convert.ToDateTime(reader["InspectionDate"]),
                             ValidTo = Convert.ToDateTime(reader["ValidTo"]),
                             InspectionStation = InspectionStationDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionStationId"])),
@@ -106,7 +107,7 @@ namespace core.dbmappers
             return null;
         }
 
-        public static List<Inspection> SelectAllByVehicleId(SQLiteConnection conn, int id)
+        public static List<Inspection> SelectAllByVehicleId(int id)
         {
             List<Inspection> result = new List<Inspection>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAllByVehicleId, conn))
@@ -122,7 +123,7 @@ namespace core.dbmappers
                         Inspection im = new Inspection()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
-                            Vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"])),
+                            Vehicle = VehicleDbMapper.SelectById(Convert.ToInt32(reader["VehicleId"])),
                             InspectionDate = Convert.ToDateTime(reader["InspectionDate"]),
                             ValidTo = Convert.ToDateTime(reader["ValidTo"]),
                             InspectionStation = InspectionStationDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionStationId"])),
@@ -147,7 +148,7 @@ namespace core.dbmappers
             return result;
         }
 
-        public static int Insert(SQLiteConnection conn, Inspection im)
+        public static int Insert(Inspection im)
         {
             if (im == null) return -2;
 
@@ -175,7 +176,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Update(SQLiteConnection conn, Inspection im)
+        public static int Update(Inspection im)
         {
             if (im == null) return -2;
             if (im.Id < 0) return -3;
@@ -205,7 +206,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Delete(SQLiteConnection conn, Inspection im)
+        public static int Delete(Inspection im)
         {
             if (im == null) return -2;
             if (im.Id < 0) return -3;
@@ -227,7 +228,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static List<Inspection> SelectAllByVehicleAdminId(SQLiteConnection conn, int adminId)
+        public static List<Inspection> SelectAllByVehicleAdminId(int adminId)
         {
             List<Inspection> result = new List<Inspection>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
@@ -242,7 +243,7 @@ namespace core.dbmappers
                         Inspection im = new Inspection()
                         {
                             Id = Convert.ToInt32(reader["rowid"].ToString()),
-                            Vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"])),
+                            Vehicle = VehicleDbMapper.SelectById(Convert.ToInt32(reader["VehicleId"])),
                             InspectionDate = Convert.ToDateTime(reader["InspectionDate"]),
                             ValidTo = Convert.ToDateTime(reader["ValidTo"]),
                             InspectionStation = InspectionStationDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionStationId"])),

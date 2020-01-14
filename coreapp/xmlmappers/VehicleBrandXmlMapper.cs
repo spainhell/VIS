@@ -8,7 +8,8 @@ namespace core.xmlmappers
 {
     public class VehicleBrandXmlMapper
     {
-        public static List<VehicleBrand> SelectAll(string filename)
+        private static string filename = appconfig.xmlTypes;
+        public static List<VehicleBrand> SelectAll()
         {
             List<VehicleBrand> vbmList = new List<VehicleBrand>();
 
@@ -31,7 +32,7 @@ namespace core.xmlmappers
             return vbmList;
         }
 
-        public static VehicleBrand SelectById(string filename, int id)
+        public static VehicleBrand SelectById(int id)
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(filename);
@@ -49,7 +50,7 @@ namespace core.xmlmappers
             return vtm;
         }
 
-        public static int Insert(string filename, VehicleBrand vbm)
+        public static int Insert(VehicleBrand vbm)
         {
             if (vbm == null) return -2;
 
@@ -99,7 +100,7 @@ namespace core.xmlmappers
             return maxId;
         }
 
-        public static int Update(string filename, VehicleBrand vbm)
+        public static int Update(VehicleBrand vbm)
         {
             if (vbm == null) return -2;
             if (vbm.Id < 0) return -3;
@@ -122,7 +123,7 @@ namespace core.xmlmappers
             return 0;
         }
 
-        public static int Delete(string filename, VehicleBrand vbm)
+        public static int Delete(VehicleBrand vbm)
         {
             if (vbm == null) return -2;
             if (vbm.Id < 0) return -3;
