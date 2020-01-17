@@ -16,11 +16,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using core.dbmappers;
+using core.logic;
+using core.models;
 using coreapp;
-using testapp;
-using testapp.dbmappers;
-using testapp.models;
-using testapp.xmlmappers;
+
 
 namespace wpfapp
 {
@@ -42,12 +42,12 @@ namespace wpfapp
 
         public void Refresh()
         {
-            List <VehicleModel> vehicles = VehicleDbMapper.SelectAll(_sqlConn);
+            List <Vehicle> vehicles = VehicleDbMapper.SelectAll(_sqlConn);
             cbVehicle.ItemsSource = vehicles;
             cbVehicle.DisplayMemberPath = "Title";
             cbVehicle.SelectedValuePath = "Id";
 
-            List<InspectionStationModel> stations = InspectionStationDbMapper.SelectAll(_sqlConn);
+            List<InspectionStation> stations = InspectionStationDbMapper.SelectAll(_sqlConn);
             cbStation.ItemsSource = stations;
             cbStation.DisplayMemberPath = "Company";
             cbStation.SelectedValuePath = "Id";
@@ -80,8 +80,6 @@ namespace wpfapp
                     MessageBox.Show($"Chybně vyplněná cena STK.", "Stop", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
 
-                // kontrola tachometru
-
                 int result = InspectionDbMapper.Insert(_sqlConn, im);
                 if (result != 0)
                 {
@@ -94,6 +92,18 @@ namespace wpfapp
                 MessageBox.Show($"Vyplněné údaje jsou chybné:\n{ex.Message}",
                     "Stop", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
+        }
+
+        private void cbVehicle_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            Inspection newInsp = InspectionLogic.PrepareNewInspection(_sqlConn, Convert.ToInt32(cbVehicle.SelectedValue));
+            if (newInsp == null) return;
+            inspectionDatePicker.SelectedDate = newInsp.InspectionDate;
+            validToPicker.SelectedDate = newInsp.ValidTo;
+            cbStation.SelectedValue = newInsp.InspectionStation.Id;
+            tbPrice.Text = newInsp.Price.ToString();
+
         }
     }
 }

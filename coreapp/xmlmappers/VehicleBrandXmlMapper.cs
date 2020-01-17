@@ -8,7 +8,7 @@ namespace core.xmlmappers
 {
     public class VehicleBrandXmlMapper
     {
-        private static string filename = appconfig.xmlTypes;
+        private static string filename = appconfig.xmlBrands;
         public static List<VehicleBrand> SelectAll()
         {
             List<VehicleBrand> vbmList = new List<VehicleBrand>();

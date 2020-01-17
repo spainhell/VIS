@@ -9,7 +9,6 @@ namespace core.dbmappers
 {
     public class VehicleDbMapper
     {
-        private static SQLiteConnection conn = new SQLiteConnection(appconfig.sqlite);
         private static string selectAll = "SELECT rowid, * FROM Vehicles";
         private static string selectById = "SELECT rowid, * FROM Vehicles WHERE rowid=@Id";
         private static string selectByAdminId = "SELECT COUNT(rowid) FROM Vehicles WHERE AdminId=@AdminId";
@@ -30,7 +29,7 @@ namespace core.dbmappers
         private static string delete = "DELETE FROM Vehicles WHERE rowid=@Id";
 
 
-        public static List<Vehicle> SelectAll()
+        public static List<Vehicle> SelectAll(SQLiteConnection conn)
         {
             List<Vehicle> result = new List<Vehicle>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
@@ -52,8 +51,8 @@ namespace core.dbmappers
                             Vintage = Convert.ToInt16(reader["Vintage"]),
                             PurchasedOn = Convert.ToDateTime(reader["PurchasedOn"]),
                             Price = Convert.ToDecimal(reader["Price"].ToString()),
-                            Boss = UserBossDbMapper.SelectById(Convert.ToInt32(reader["AdminId"])),
-                            Driver = UserDriverDbMapper.SelectById(Convert.ToInt32(reader["DriverId"]))
+                            Boss = UserBossDbMapper.SelectById(conn, Convert.ToInt32(reader["AdminId"])),
+                            Driver = UserDriverDbMapper.SelectById(conn, Convert.ToInt32(reader["DriverId"]))
                         };
                         result.Add(vm);
                     }
@@ -71,7 +70,7 @@ namespace core.dbmappers
             return result;
         }
 
-        public static Vehicle SelectById(int id)
+        public static Vehicle SelectById(SQLiteConnection conn, int id)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
             {
@@ -93,8 +92,8 @@ namespace core.dbmappers
                             Vintage = Convert.ToInt16(reader["Vintage"]),
                             PurchasedOn = Convert.ToDateTime(reader["PurchasedOn"]),
                             Price = Convert.ToDecimal(reader["Price"].ToString()),
-                            Boss = UserBossDbMapper.SelectById(Convert.ToInt32(reader["AdminId"])),
-                            Driver = UserDriverDbMapper.SelectById(Convert.ToInt32(reader["DriverId"]))
+                            Boss = UserBossDbMapper.SelectById(conn, Convert.ToInt32(reader["AdminId"])),
+                            Driver = UserDriverDbMapper.SelectById(conn, Convert.ToInt32(reader["DriverId"]))
                         };
                         reader.Close();
                         return vm;
@@ -109,7 +108,7 @@ namespace core.dbmappers
             return null;
         }
 
-        public static int Insert(Vehicle vm)
+        public static int Insert(SQLiteConnection conn, Vehicle vm)
         {
             if (vm == null) return -2;
 
@@ -139,7 +138,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Update(Vehicle vm)
+        public static int Update(SQLiteConnection conn, Vehicle vm)
         {
             if (vm == null) return -2;
             if (vm.Id < 0) return -3;
@@ -171,7 +170,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Delete(Vehicle vm)
+        public static int Delete(SQLiteConnection conn, Vehicle vm)
         {
             if (vm == null) return -2;
             if (vm.Id < 0) return -3;
@@ -193,7 +192,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static bool VinExists(string vin)
+        public static bool VinExists(SQLiteConnection conn, string vin)
         {
             if (String.IsNullOrEmpty(vin)) return false;
 
@@ -213,7 +212,7 @@ namespace core.dbmappers
             return false;
         }
 
-        public static long SelectVehiclesByAdminId(int adminId)
+        public static long SelectVehiclesByAdminId(SQLiteConnection conn, int adminId)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(selectByAdminId, conn))
             {
@@ -231,7 +230,7 @@ namespace core.dbmappers
             return -1;
         }
 
-        public static long SelectDriversCountByAdminId(int adminId)
+        public static long SelectDriversCountByAdminId(SQLiteConnection conn, int adminId)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(selectDriversCountByAdminId, conn))
             {

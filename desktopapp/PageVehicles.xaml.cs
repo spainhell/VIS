@@ -16,9 +16,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using testapp;
-using testapp.dbmappers;
-using testapp.models;
+using core.dbmappers;
+using core.models;
+
 
 namespace wpfapp
 {
@@ -28,7 +28,7 @@ namespace wpfapp
     public partial class PageVehicles : Page
     {
         private readonly SQLiteConnection _sqlConn;
-        private VehicleModel _selectedVehicle;
+        private Vehicle _selectedVehicle;
 
         public PageVehicles(SQLiteConnection sqlConn)
         {
@@ -45,7 +45,7 @@ namespace wpfapp
 
         private void DgVehicles_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _selectedVehicle = DgVehicles.SelectedItem as VehicleModel;
+            _selectedVehicle = DgVehicles.SelectedItem as Vehicle;
             BtnDetail.IsEnabled = true;
         }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using core;
 using core.dbmappers;
+using core.logic;
 using core.models;
 using core.xmlmappers;
 using Microsoft.AspNetCore.Http;
@@ -21,7 +22,7 @@ namespace mvcapp.Controllers
         public ActionResult Index()
         {
             sqlconn.Open();
-            List<Vehicle> vehicles = VehicleDbMapper.SelectAll();
+            List<Vehicle> vehicles = VehicleLogic.FindAll(sqlconn);
             sqlconn.Close();
 
             return View(vehicles);
@@ -31,7 +32,7 @@ namespace mvcapp.Controllers
         public ActionResult Details(int id)
         {
             sqlconn.Open();
-            Vehicle vehicle = VehicleDbMapper.SelectById(id);
+            Vehicle vehicle = VehicleDbMapper.SelectById(sqlconn, id);
             sqlconn.Close();
             return View(vehicle);
         }
@@ -43,8 +44,8 @@ namespace mvcapp.Controllers
             List<VehicleType> types = VehicleTypeXmlMapper.SelectAll();
             List<VehicleBrand> brands = VehicleBrandXmlMapper.SelectAll();
 
-            List<UserDriver> drivers = UserDriverDbMapper.SelectAll();
-            List<UserBoss> bosses = UserBossDbMapper.SelectAll();
+            List<UserDriver> drivers = UserDriverDbMapper.SelectAll(sqlconn);
+            List<UserBoss> bosses = UserBossDbMapper.SelectAll(sqlconn);
 
             sqlconn.Close();
 
@@ -63,20 +64,9 @@ namespace mvcapp.Controllers
         {
             try
             {
-                sqlconn.Open();
-                bool vinExists = VehicleDbMapper.VinExists(vehicle.Vin);
-                if (vinExists) return View(vehicle);
+                var r = VehicleLogic.Create(sqlconn, vehicle, vehicle.VehicleTypeId.Value, vehicle.VehicleBrandId.Value, 4, 1);
 
-                vehicle.VehicleType = VehicleTypeXmlMapper.SelectById(vehicle.VehicleTypeId.Value);
-                vehicle.VehicleBrand =
-                    VehicleBrandXmlMapper.SelectById(vehicle.VehicleBrandId.Value);
-                vehicle.Driver = UserDriverDbMapper.SelectById(vehicle.DriverId.Value);
-                vehicle.Boss = UserBossDbMapper.SelectById(vehicle.BossId.Value);
-                
-                int result = VehicleDbMapper.Insert(vehicle);
-                sqlconn.Close();
-
-                if (result != 0) return View();
+                if (!r) return View();
 
                 return RedirectToAction(nameof(Index));
             }
@@ -114,7 +104,7 @@ namespace mvcapp.Controllers
         public ActionResult Delete(int id)
         {
             sqlconn.Open();
-            Vehicle vehicle = VehicleDbMapper.SelectById(id);
+            Vehicle vehicle = VehicleDbMapper.SelectById(sqlconn, id);
             sqlconn.Close();
 
             return View(vehicle);
@@ -128,13 +118,13 @@ namespace mvcapp.Controllers
             try
             {
                 sqlconn.Open();
-                List<Inspection> inspections = InspectionDbMapper.SelectAllByVehicleId(id);
+                List<Inspection> inspections = InspectionDbMapper.SelectAllByVehicleId(sqlconn, id);
                 sqlconn.Close();
 
                 if (inspections.Count > 0) return View(vehicle);
 
                 sqlconn.Open();
-                VehicleDbMapper.Delete(vehicle);
+                VehicleDbMapper.Delete(sqlconn, vehicle);
                 sqlconn.Close();
 
                 return RedirectToAction(nameof(Index));

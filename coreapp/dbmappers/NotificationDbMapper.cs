@@ -14,7 +14,6 @@ namespace core.dbmappers
 {
     public class NotificationDbMapper
     {
-        private static SQLiteConnection conn = new SQLiteConnection(appconfig.sqlite);
         private static string selectAll = "SELECT * FROM Notifications";
         private static string selectById = "SELECT * FROM Notifications WHERE Id=@Id";
         private static string selectByInspectionId = "SELECT * FROM Notifications WHERE InspectionId=@InspectionId";
@@ -33,7 +32,7 @@ namespace core.dbmappers
             "JOIN Vehicles V ON I.VehicleId = V.rowid WHERE julianday(I.ValidTo) - julianday('now') < @days " +
             "AND I.rowid NOT IN (SELECT InspectionId FROM Notifications)";
 
-        public static List<Notification> SelectAll()
+        public static List<Notification> SelectAll(SQLiteConnection conn)
         {
             List<Notification> result = new List<Notification>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectAll, conn))
@@ -68,7 +67,7 @@ namespace core.dbmappers
             return result;
         }
 
-        public static Notification SelectById(int id)
+        public static Notification SelectById(SQLiteConnection conn, int id)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(selectById, conn))
             {
@@ -100,7 +99,7 @@ namespace core.dbmappers
             return null;
         }
 
-        public static List<Notification> SelectByInspectionId(int inspectionId)
+        public static List<Notification> SelectByInspectionId(SQLiteConnection conn, int inspectionId)
         {
             List<Notification> result = new List<Notification>();
             using (SQLiteCommand cmd = new SQLiteCommand(selectByInspectionId, conn))
@@ -135,7 +134,7 @@ namespace core.dbmappers
             return null;
         }
 
-        public static int Insert(Notification nm)
+        public static int Insert(SQLiteConnection conn, Notification nm)
         {
             if (nm == null) return -2;
 
@@ -159,7 +158,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Update(Notification nm)
+        public static int Update(SQLiteConnection conn, Notification nm)
         {
             if (nm == null) return -2;
             if (nm.Id < 0) return -3;
@@ -185,7 +184,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Delete(int id)
+        public static int Delete(SQLiteConnection conn, int id)
         {
             using (SQLiteCommand cmd = new SQLiteCommand(delete, conn))
             {
@@ -204,7 +203,7 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static List<Notification> GenerateNotifications(int days)
+        public static List<Notification> GenerateNotifications(SQLiteConnection conn, int days)
         {
             List<Notification> result = new List<Notification>();
             using (SQLiteCommand cmd = new SQLiteCommand(generateNotifications, conn))
@@ -225,7 +224,7 @@ namespace core.dbmappers
                             Delivered = DateTime.Now
                         };
 
-                        var vehicle = VehicleDbMapper.SelectById(Convert.ToInt32(reader["VehicleId"]));
+                        var vehicle = VehicleDbMapper.SelectById(conn, Convert.ToInt32(reader["VehicleId"]));
                         var boss = UserBossDbMapper.SelectById(conn, vehicle.Boss.Id);
                         var email = boss.Email;
                         nm.Destination = email;

@@ -33,7 +33,7 @@
         <Label Content="Vytvoření STK" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="0" Width="300" Foreground="White"/>
         
         <Label Content="Vozidlo" HorizontalAlignment="Left" Margin="30,30,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
-        <ComboBox Name="cbVehicle" HorizontalAlignment="Left" Margin="180,35,0,0" Grid.Row="1" VerticalAlignment="Top" Width="240"/>
+        <ComboBox Name="cbVehicle" HorizontalAlignment="Left" Margin="180,35,0,0" Grid.Row="1" VerticalAlignment="Top" Width="240" SelectionChanged="cbVehicle_SelectionChanged"/>
         
         <Label Content="Datum prohlídky" HorizontalAlignment="Left" Margin="30,60,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
         <DatePicker Name="inspectionDatePicker" HorizontalAlignment="Left" Margin="180,65,0,0" Grid.Row="1" VerticalAlignment="Top" Width="240" />

@@ -2,15 +2,16 @@
 using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Controls;
-using testapp.dbmappers;
-using testapp.models;
+using core.dbmappers;
+using core.logic;
+using core.models;
 
 namespace wpfapp
 {
     public partial class PageNotifications : Page
     {
         private readonly SQLiteConnection _sqlConn;
-        private VehicleModel _selectedVehicle;
+        private List<Notification> _notifications;
 
         public PageNotifications(SQLiteConnection sqlConn)
         {
@@ -21,8 +22,8 @@ namespace wpfapp
 
         public void Refresh()
         {
-            List<NotificationModel> notifications = NotificationDbMapper.GenerateNotifications(_sqlConn, 30);
-            DgNotifications.ItemsSource = notifications;
+            _notifications = NotificationLogic.GetNotifications(_sqlConn, 30);
+            DgNotifications.ItemsSource = _notifications;
         }
 
         private void DgVehicles_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -31,10 +32,20 @@ namespace wpfapp
             //BtnDetail.IsEnabled = true;
         }
 
-        private void BtnDetail_Click(object sender, RoutedEventArgs e)
+        private void BtnSendNotify_Click(object sender, RoutedEventArgs e)
         {
-            //VehicleDetailWindow vdw = new VehicleDetailWindow(_sqlConn, _selectedVehicle);
-            //vdw.Show();
+            bool r = NotificationLogic.SaveNotifications(_sqlConn, _notifications);
+
+            if (r)
+            {
+                MessageBox.Show($"Notifikace byly uloženy do DB", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show($"Notifikace se nepodařilo uložit do DB.", "Varování", MessageBoxButton.OK, MessageBoxImage.Warning);
+
+            }
+            Refresh();
         }
     }
 }

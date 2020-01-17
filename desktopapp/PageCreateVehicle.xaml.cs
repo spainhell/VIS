@@ -16,11 +16,12 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using coreapp;
-using testapp;
-using testapp.dbmappers;
-using testapp.models;
-using testapp.xmlmappers;
+using core;
+using core.dbmappers;
+using core.logic;
+using core.models;
+using core.xmlmappers;
+
 
 namespace wpfapp
 {
@@ -42,12 +43,12 @@ namespace wpfapp
 
         public void Refresh()
         {
-            List<VehicleTypeModel> typesList = VehicleTypeXmlMapper.SelectAll(appconfig.xmlTypes);
+            List<VehicleType> typesList = VehicleTypeXmlMapper.SelectAll();
             cbType.ItemsSource = typesList;
             cbType.DisplayMemberPath = "TypeName";
             cbType.SelectedValuePath = "Id";
 
-            List<VehicleBrandModel> brandsList = VehicleBrandXmlMapper.SelectAll(appconfig.xmlBrands);
+            List<VehicleBrand> brandsList = VehicleBrandXmlMapper.SelectAll();
             cbBrand.ItemsSource = brandsList;
             cbBrand.DisplayMemberPath = "BrandName";
             cbBrand.SelectedValuePath = "Id";
@@ -59,19 +60,13 @@ namespace wpfapp
             var typeId = cbType.SelectedValue;
             var brandId = cbBrand.SelectedValue;
 
-            VehicleTypeModel selectedType = null;
-            VehicleBrandModel selectedBrand = null;
-
-            if (typeId != null) selectedType = VehicleTypeXmlMapper.SelectById(appconfig.xmlTypes, Convert.ToInt32(typeId));
-            if (typeId != null) selectedBrand = VehicleBrandXmlMapper.SelectById(appconfig.xmlBrands, Convert.ToInt32(brandId));
-
-            VehicleModel vm = new VehicleModel()
+            Vehicle vm = new Vehicle()
             {
                 Id = -1, LicensePlate = tbLicensePlate.Text, Price = Convert.ToDecimal(tbPrice.Text), PurchasedOn = Convert.ToDateTime(datePicker.Text),
-                Title = tbTitle.Text, VehicleBrand = selectedBrand, VehicleType = selectedType, Vin = tbVin.Text, Vintage = Convert.ToInt16(tbVintage.Text)
+                Title = tbTitle.Text, VehicleBrand = null, VehicleType = null, Vin = tbVin.Text, Vintage = Convert.ToInt16(tbVintage.Text)
             };
 
-            VehicleDbMapper.Insert(_sqlConn, vm);
+            VehicleLogic.Create(_sqlConn, vm, Convert.ToInt32(typeId), Convert.ToInt32(brandId), 4, 1);
         }
     }
 }

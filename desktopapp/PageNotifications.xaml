@@ -47,7 +47,7 @@
         </GroupBox>
         
 
-        <Button x:Name="BtnDetail" Content="Zobrazit detail" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" IsEnabled="False" Grid.Row="2" Height="36" Click="BtnDetail_Click"/>
+        <Button x:Name="BtnSendNotify" Content="Odeslat notifikace" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,0" IsEnabled="True" Grid.Row="2" Height="36" Click="BtnSendNotify_Click"/>
 
 
 
