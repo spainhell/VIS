@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
-using System.Text;
 using core.dbmappers;
 using core.models;
 
-namespace core.logic
+namespace bl
 {
     public class InspectionLogic
     {
+        public static List<Inspection> FindAll(SQLiteConnection conn)
+        {
+            return InspectionDbMapper.SelectAll(conn);
+        }
+
         public static Inspection GetLastInspection(SQLiteConnection conn, int vehicleId)
         {
             var inspections = InspectionDbMapper.SelectAllByVehicleId(conn, vehicleId);
@@ -44,10 +48,28 @@ namespace core.logic
             return newInspection;
         }
 
-        public static bool Insert(SQLiteConnection conn, Inspection i)
+        public static bool Insert(SQLiteConnection conn, Inspection i, out string error)
         {
+            if (i.InspectionDate >= i.ValidTo)
+            {
+                error = "Chybně vyplněné datum platnosti STK.";
+                return false;
+            }
+
+            if (i.Price < 0)
+            {
+                error = "Chybně vyplněná cena STK.";
+                return false;
+            }
+
             int result = InspectionDbMapper.Insert(conn, i);
-            return (result==0);
+            if (result != 0)
+            {
+                error = "Prohlídku se nepodařilo uložit do DB.";
+            }
+
+            error = "";
+            return true;
         }
 
         public static void Delete(SQLiteConnection conn, int id)
@@ -59,6 +81,19 @@ namespace core.logic
             }
         }
 
-        
+        public static int EndingInspectionsCount(SQLiteConnection conn, int adminId, int remainDays)
+        {
+            // vypíše všechny prohlídky u vozidel daného správce, které končí u určené lhůtě
+            List<Inspection> inspections = InspectionDbMapper.SelectAllByVehicleAdminId(conn, 1);
+
+            int inspectionsCount = 0;
+            foreach (Inspection inspection in inspections)
+            {
+                int days = (inspection.ValidTo - DateTime.Now).Days;
+                if (days <= remainDays) inspectionsCount++;
+            }
+
+            return inspectionsCount;
+        }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.Windows;
-using core.logic;
+using bl;
 using core.models;
 
 

@@ -2,8 +2,8 @@
 using System.Data.SQLite;
 using System.Windows;
 using System.Windows.Controls;
+using bl;
 using core.dbmappers;
-using core.logic;
 using core.models;
 
 namespace wpfapp

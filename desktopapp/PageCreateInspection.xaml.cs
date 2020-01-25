@@ -16,10 +16,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using bl;
 using core.dbmappers;
-using core.logic;
 using core.models;
-using coreapp;
 
 
 namespace wpfapp
@@ -70,20 +69,10 @@ namespace wpfapp
                     Defects = tbDefects.Text
                 };
 
-                if (im.InspectionDate >= im.ValidTo)
+                bool result = InspectionLogic.Insert(_sqlConn, im, out var error);
+                if (!result)
                 {
-                    MessageBox.Show($"Chybně vyplněné datum platnosti STK.", "Stop", MessageBoxButton.OK, MessageBoxImage.Stop);
-                }
-
-                if (im.Price < 0)
-                {
-                    MessageBox.Show($"Chybně vyplněná cena STK.", "Stop", MessageBoxButton.OK, MessageBoxImage.Stop);
-                }
-
-                int result = InspectionDbMapper.Insert(_sqlConn, im);
-                if (result != 0)
-                {
-                    MessageBox.Show($"Prohlídku se nepodařilo uložit do DB.", "Stop", MessageBoxButton.OK, MessageBoxImage.Stop);
+                    MessageBox.Show(error, "Stop", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
 
             }

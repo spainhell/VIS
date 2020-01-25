@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
+using bl;
 using core;
 using core.dbmappers;
 using core.models;
@@ -22,15 +23,10 @@ namespace mvcapp.Controllers
             sqlconn.Open();
             long vehiclesCount = VehicleDbMapper.SelectVehiclesByAdminId(sqlconn, 1);
             long driversCount = VehicleDbMapper.SelectDriversCountByAdminId(sqlconn, 1);
-            List<Inspection> inspections = InspectionDbMapper.SelectAllByVehicleAdminId(sqlconn, 1);
+            long inspectionsCount = InspectionLogic.EndingInspectionsCount(sqlconn, 1, 30);
+            
             sqlconn.Close();
 
-            int inspectionsCount = 0;
-            foreach (Inspection inspection in inspections)
-            {
-                int days = (inspection.ValidTo - DateTime.Now).Days;
-                if (days <= 30) inspectionsCount++;
-            }
 
             ViewData["Vehicles"] = vehiclesCount;
             ViewData["Drivers"] = driversCount;

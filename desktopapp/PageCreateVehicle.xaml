@@ -31,34 +31,38 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Label Content="Vytvoření vozidla" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Margin="0,13,0,0" VerticalAlignment="Top" HorizontalAlignment="Center" Grid.Row="0" Width="300" Foreground="White"/>
-        
+
         <Label Content="Název" HorizontalAlignment="Left" Margin="30,30,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
-        <TextBox Name="tbTitle" HorizontalAlignment="Left" Height="23" Margin="180,35,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
-        
+        <TextBox Name="tbTitle" HorizontalAlignment="Left" Height="23" Margin="180,35,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188"/>
+
         <Label Content="Druh" HorizontalAlignment="Left" Margin="30,60,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
-        <ComboBox Name="cbType" HorizontalAlignment="Left" Margin="180,65,0,0" Grid.Row="1" VerticalAlignment="Top" Width="240"/>
+        <ComboBox Name="cbType" HorizontalAlignment="Left" Margin="180,65,0,0" Grid.Row="1" VerticalAlignment="Top" Width="188"/>
 
         <Label Content="Značka" HorizontalAlignment="Left" Margin="30,90,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
-        <ComboBox Name="cbBrand" HorizontalAlignment="Left" Margin="180,95,0,0" Grid.Row="1" VerticalAlignment="Top" Width="240"/>
+        <ComboBox Name="cbBrand" HorizontalAlignment="Left" Margin="180,95,0,0" Grid.Row="1" VerticalAlignment="Top" Width="188"/>
 
         <Label Content="VIN kód" HorizontalAlignment="Left" Margin="30,120,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
-        <TextBox Name="tbVin" HorizontalAlignment="Left" Height="23" Margin="180,125,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
+        <TextBox Name="tbVin" HorizontalAlignment="Left" Height="23" Margin="180,125,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188"/>
 
         <Label Content="SPZ" HorizontalAlignment="Left" Margin="30,150,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
-        <TextBox Name="tbLicensePlate" HorizontalAlignment="Left" Height="23" Margin="180,155,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
+        <TextBox Name="tbLicensePlate" HorizontalAlignment="Left" Height="23" Margin="180,155,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188"/>
 
         <Label Content="Rok výroby" HorizontalAlignment="Left" Margin="30,180,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
-        <TextBox Name="tbVintage" HorizontalAlignment="Left" Height="23" Margin="180,185,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
+        <TextBox Name="tbVintage" HorizontalAlignment="Left" Height="23" Margin="180,185,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188"/>
 
         <Label Content="Pořizovací cena" HorizontalAlignment="Left" Margin="30,210,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
-        <TextBox Name="tbPrice" HorizontalAlignment="Left" Height="23" Margin="180,215,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>
+        <TextBox Name="tbPrice" HorizontalAlignment="Left" Height="23" Margin="180,215,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="188"/>
 
         <Label Content="Datum pořízení" HorizontalAlignment="Left" Margin="30,240,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
         <!--<TextBox Name="tbPurchasedOn" HorizontalAlignment="Left" Height="23" Margin="180,245,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240"/>-->
-        <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="180,245,0,0" Grid.Row="1" VerticalAlignment="Top" Width="240" />
-        
+        <DatePicker Name="datePicker" HorizontalAlignment="Left" Margin="180,245,0,0" Grid.Row="1" VerticalAlignment="Top" Width="188" />
+
         <Button Content="Vytvoř vozidlo" HorizontalAlignment="Center" Margin="0,0,0,30" Grid.Row="1" VerticalAlignment="Bottom" Width="auto" Padding="10,0,10,0" Click="Button_Click"/>
-        
+        <Label Content="Řidič" HorizontalAlignment="Left" Margin="419,34,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
+        <ComboBox x:Name="cbDriver" HorizontalAlignment="Left" Margin="569,39,0,0" Grid.Row="1" VerticalAlignment="Top" Width="188"/>
+        <Label Content="Správce" HorizontalAlignment="Left" Margin="419,64,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
+        <ComboBox x:Name="cbBoss" HorizontalAlignment="Left" Margin="569,69,0,0" Grid.Row="1" VerticalAlignment="Top" Width="188"/>
+
 
 
 

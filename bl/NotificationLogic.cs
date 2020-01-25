@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Text;
 using core.dbmappers;
 using core.models;
 
-namespace core.logic
+namespace bl
 {
     public class NotificationLogic
     {

@@ -18,7 +18,7 @@ namespace core.dbmappers
         private static string selectAllByVehicleId = "SELECT rowid, * FROM Inspections WHERE VehicleId=@Id";
 
         private static string selectAllByVehicleAdminId =
-            "SELECT * FROM Inspections WHERE VehicleId IN (SELECT rowid FROM Vehicles WHERE AdminId=@AdminId)";
+            "SELECT rowid, * FROM Inspections WHERE VehicleId IN (SELECT rowid FROM Vehicles WHERE AdminId=@AdminId)";
 
         private static string insert =
             "INSERT INTO Inspections(VehicleId, InspectionDate, ValidTo, InspectionStationId, ProtocolNumber, " +

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
 using core.dbmappers;
 using core.models;
 using core.xmlmappers;
 
-namespace core.logic
+namespace bl
 {
     public class VehicleLogic
     {

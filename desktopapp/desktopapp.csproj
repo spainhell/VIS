@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\bl\bl.csproj" />
     <ProjectReference Include="..\coreapp\core.csproj" />
   </ItemGroup>
 
@@ -15,17 +16,11 @@
       <SubType>Code</SubType>
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Update="PageCreateVehicle - Copy.xaml.cs">
-      <DependentUpon>PageCreateVehicle.xaml</DependentUpon>
-    </Compile>
     <Compile Update="PageCreateVehicle.xaml.cs">
       <DependentUpon>PageCreateVehicle.xaml</DependentUpon>
     </Compile>
     <Compile Update="PageStatistics.xaml.cs">
       <DependentUpon>PageStatistics.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="PageVehicles - Copy.xaml.cs">
-      <DependentUpon>PageVehicles.xaml</DependentUpon>
     </Compile>
     <Compile Update="PageVehicles.xaml.cs">
       <DependentUpon>PageVehicles.xaml</DependentUpon>
