@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
+using bl;
 using core;
 using core.dbmappers;
 using core.models;
@@ -19,7 +20,7 @@ namespace mvcapp.Controllers
         public ActionResult Index()
         {
             sqlconn.Open();
-            List<UserDriver> drivers = UserDriverDbMapper.SelectAll(sqlconn);
+            List<UserDriver> drivers = UserDriverLogic.FindAll(sqlconn);
             sqlconn.Close();
             return View(drivers);
         }
@@ -28,7 +29,7 @@ namespace mvcapp.Controllers
         public ActionResult Details(int id)
         {
             sqlconn.Open();
-            UserDriver driver = UserDriverDbMapper.SelectById(sqlconn, id);
+            UserDriver driver = UserDriverLogic.FindById(sqlconn, id);
             sqlconn.Close();
             return View(driver);
         }
@@ -47,7 +48,7 @@ namespace mvcapp.Controllers
             try
             {
                 sqlconn.Open();
-                int result = UserDriverDbMapper.Insert(sqlconn, driver);
+                int result = UserDriverLogic.Insert(sqlconn, driver);
                 sqlconn.Close();
 
                 if (result != 0) throw new Exception();
@@ -64,7 +65,7 @@ namespace mvcapp.Controllers
         public ActionResult Edit(int id)
         {
             sqlconn.Open();
-            UserDriver driver = UserDriverDbMapper.SelectById(sqlconn, id);
+            UserDriver driver = UserDriverLogic.FindById(sqlconn, id);
             sqlconn.Close();
             return View(driver);
         }
@@ -77,7 +78,7 @@ namespace mvcapp.Controllers
             try
             {
                 sqlconn.Open();
-                int result = UserDriverDbMapper.Update(sqlconn, driver);
+                int result = UserDriverLogic.Update(sqlconn, driver);
                 sqlconn.Close();
                 
                 if (result != 0) throw new Exception();
@@ -94,7 +95,7 @@ namespace mvcapp.Controllers
         public ActionResult Delete(int id)
         {
             sqlconn.Open();
-            UserDriver driver = UserDriverDbMapper.SelectById(sqlconn, id);
+            UserDriver driver = UserDriverLogic.FindById(sqlconn, id);
             sqlconn.Close();
 
             return View(driver);
@@ -108,7 +109,7 @@ namespace mvcapp.Controllers
             try
             {
                 sqlconn.Open();
-                int result = UserDriverDbMapper.Update(sqlconn, driver);
+                int result = UserDriverLogic.Update(sqlconn, driver);
                 sqlconn.Close();
 
                 if (result != 0) throw new Exception();

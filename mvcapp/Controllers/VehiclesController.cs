@@ -32,7 +32,7 @@ namespace mvcapp.Controllers
         public ActionResult Details(int id)
         {
             sqlconn.Open();
-            Vehicle vehicle = VehicleDbMapper.SelectById(sqlconn, id);
+            Vehicle vehicle = VehicleLogic.FindById(sqlconn, id);
             sqlconn.Close();
             return View(vehicle);
         }
@@ -44,8 +44,8 @@ namespace mvcapp.Controllers
             List<VehicleType> types = VehicleTypeXmlMapper.SelectAll();
             List<VehicleBrand> brands = VehicleBrandXmlMapper.SelectAll();
 
-            List<UserDriver> drivers = UserDriverDbMapper.SelectAll(sqlconn);
-            List<UserBoss> bosses = UserBossDbMapper.SelectAll(sqlconn);
+            List<UserDriver> drivers = UserDriverLogic.FindAll(sqlconn);
+            List<UserBoss> bosses = UserBossLogic.FindAll(sqlconn);
 
             sqlconn.Close();
 
@@ -104,7 +104,7 @@ namespace mvcapp.Controllers
         public ActionResult Delete(int id)
         {
             sqlconn.Open();
-            Vehicle vehicle = VehicleDbMapper.SelectById(sqlconn, id);
+            Vehicle vehicle = VehicleLogic.FindById(sqlconn, id);
             sqlconn.Close();
 
             return View(vehicle);
@@ -118,13 +118,13 @@ namespace mvcapp.Controllers
             try
             {
                 sqlconn.Open();
-                List<Inspection> inspections = InspectionDbMapper.SelectAllByVehicleId(sqlconn, id);
+                List<Inspection> inspections = InspectionLogic.FindAllByVehicleId(sqlconn, id);
                 sqlconn.Close();
 
                 if (inspections.Count > 0) return View(vehicle);
 
                 sqlconn.Open();
-                VehicleDbMapper.Delete(sqlconn, vehicle);
+                VehicleLogic.Delete(sqlconn, 1, vehicle.Id);
                 sqlconn.Close();
 
                 return RedirectToAction(nameof(Index));

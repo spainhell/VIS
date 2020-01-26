@@ -16,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using bl;
 using core.dbmappers;
 using core.models;
 
@@ -39,7 +40,7 @@ namespace wpfapp
 
         public void Refresh()
         {
-            var vehicles = VehicleDbMapper.SelectAll(_sqlConn);
+            var vehicles = VehicleLogic.FindAll(_sqlConn);
             DgVehicles.ItemsSource = vehicles;
         }
 

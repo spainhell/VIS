@@ -21,8 +21,8 @@ namespace mvcapp.Controllers
         public ActionResult Index()
         {
             sqlconn.Open();
-            long vehiclesCount = VehicleDbMapper.SelectVehiclesByAdminId(sqlconn, 1);
-            long driversCount = VehicleDbMapper.SelectDriversCountByAdminId(sqlconn, 1);
+            long vehiclesCount = VehicleLogic.CountVehiclesByAdminId(sqlconn, 1);
+            long driversCount = VehicleLogic.CountDriversByAdminId(sqlconn, 1);
             long inspectionsCount = InspectionLogic.EndingInspectionsCount(sqlconn, 1, 30);
             
             sqlconn.Close();

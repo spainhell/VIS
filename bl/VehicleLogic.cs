@@ -13,6 +13,11 @@ namespace bl
             return VehicleDbMapper.SelectAll(conn);
         }
 
+        public static Vehicle FindById(SQLiteConnection conn, int id)
+        {
+            return VehicleDbMapper.SelectById(conn, id);
+        }
+
         public static bool Create(SQLiteConnection conn, Vehicle vh, int typeId, int brandId, int driverId, int bossId)
         {
             // kontrola existence VIN v databázi
@@ -45,6 +50,14 @@ namespace bl
             return true;
         }
 
+        public static long CountVehiclesByAdminId(SQLiteConnection conn, int adminId)
+        {
+            return VehicleDbMapper.SelectVehiclesByAdminId(conn, adminId);
+        }
 
+        public static long CountDriversByAdminId(SQLiteConnection conn, int adminId)
+        {
+            return VehicleDbMapper.SelectDriversCountByAdminId(conn, adminId);
+        }
     }
 }

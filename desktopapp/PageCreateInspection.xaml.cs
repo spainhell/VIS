@@ -41,12 +41,12 @@ namespace wpfapp
 
         public void Refresh()
         {
-            List <Vehicle> vehicles = VehicleDbMapper.SelectAll(_sqlConn);
+            List <Vehicle> vehicles = VehicleLogic.FindAll(_sqlConn);
             cbVehicle.ItemsSource = vehicles;
             cbVehicle.DisplayMemberPath = "Title";
             cbVehicle.SelectedValuePath = "Id";
 
-            List<InspectionStation> stations = InspectionStationDbMapper.SelectAll(_sqlConn);
+            List<InspectionStation> stations = InspectionStationLogic.FindAll(_sqlConn);
             cbStation.ItemsSource = stations;
             cbStation.DisplayMemberPath = "Company";
             cbStation.SelectedValuePath = "Id";
@@ -59,10 +59,10 @@ namespace wpfapp
                 Inspection im = new Inspection()
                 {
                     Id = -1,
-                    Vehicle = VehicleDbMapper.SelectById(_sqlConn, Convert.ToInt32(cbVehicle.SelectedValue)),
+                    Vehicle = VehicleLogic.FindById(_sqlConn, Convert.ToInt32(cbVehicle.SelectedValue)),
                     InspectionDate = inspectionDatePicker.SelectedDate.Value,
                     ValidTo = validToPicker.SelectedDate.Value,
-                    InspectionStation = InspectionStationDbMapper.SelectById(_sqlConn, Convert.ToInt32(cbStation.SelectedValue)),
+                    InspectionStation = InspectionStationLogic.FindById(_sqlConn, Convert.ToInt32(cbStation.SelectedValue)),
                     ProtocolNumber = tbProtocolNr.Text,
                     Tachometer = Convert.ToInt32(tbTachometer.Text),
                     Price = Convert.ToInt32(tbPrice.Text),

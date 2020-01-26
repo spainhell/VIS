@@ -14,6 +14,11 @@ namespace bl
             return InspectionDbMapper.SelectAll(conn);
         }
 
+        public static List<Inspection> FindAllByVehicleId(SQLiteConnection conn, int vehicleId)
+        {
+            return InspectionDbMapper.SelectAllByVehicleId(conn, vehicleId);
+        }
+
         public static Inspection GetLastInspection(SQLiteConnection conn, int vehicleId)
         {
             var inspections = InspectionDbMapper.SelectAllByVehicleId(conn, vehicleId);
