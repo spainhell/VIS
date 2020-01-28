@@ -56,7 +56,7 @@
         <Label Content="Závady" HorizontalAlignment="Left" Margin="30,240,0,0" Grid.Row="1" VerticalAlignment="Top" Foreground="White" FontSize="16" />
         <TextBox Name="tbDefects" HorizontalAlignment="Left" Height="50" Margin="180,245,0,0" Grid.Row="1" AcceptsReturn="True" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="240" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"/>
 
-        <Button Content="Vytvoř vozidlo" HorizontalAlignment="Center" Margin="0,0,0,30" Grid.Row="1" VerticalAlignment="Bottom" Width="auto" Padding="10,0,10,0" Click="Button_Click"/>
+        <Button Content="Vytvoř STK" HorizontalAlignment="Center" Margin="0,0,0,30" Grid.Row="1" VerticalAlignment="Bottom" Width="auto" Padding="10,0,10,0" Click="Button_Click"/>
 
 
 

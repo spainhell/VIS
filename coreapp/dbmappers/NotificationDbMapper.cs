@@ -16,7 +16,7 @@ namespace core.dbmappers
     {
         private static string selectAll = "SELECT * FROM Notifications";
         private static string selectById = "SELECT * FROM Notifications WHERE Id=@Id";
-        private static string selectByInspectionId = "SELECT * FROM Notifications WHERE InspectionId=@InspectionId";
+        private static string selectByInspectionId = "SELECT rowid, * FROM Notifications WHERE InspectionId=@InspectionId";
 
         private static string insert =
             "INSERT INTO Notifications(InspectionId, Destination, SentOn, Delivered) VALUES (@InspectionId, @Destination, @SentOn, @Delivered)";
@@ -24,7 +24,7 @@ namespace core.dbmappers
         private static string update = 
             "UPDATE Notifications SET InspectionId=@InspectionId, Destination=@Destination, SentOn=@SentOn, Delivered=@Delivered WHERE Id=@Id";
 
-        private static string delete = "DELETE FROM Notifications WHERE Id=@Id";
+        private static string delete = "DELETE FROM Notifications WHERE rowid=@Id";
 
         private static string generateNotifications =
             "SELECT I.rowid AS 'InspectionId', V.rowid AS 'VehicleId', V.title, V.LicensePlate, I.ValidTo, " +
@@ -111,15 +111,20 @@ namespace core.dbmappers
                     reader = cmd.ExecuteReader();
                     while (reader.Read())
                     {
+                        var Id = Convert.ToInt32(reader["rowid"].ToString());
+                        var Inspection = InspectionDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionId"]));
+                        var Destination = reader["Destination"].ToString();
+                        var SentOn = Convert.ToDateTime(reader["SentOn"]);
+                        var Delivered = Convert.ToDateTime(reader["Delivered"]);
+
                         Notification nm = new Notification()
                         {
-                            Id = Convert.ToInt32(reader["Id"].ToString()),
+                            Id = Convert.ToInt32(reader["rowid"].ToString()),
                             Inspection = InspectionDbMapper.SelectById(conn, Convert.ToInt32(reader["InspectionId"])),
                             Destination = reader["Destination"].ToString(),
                             SentOn = Convert.ToDateTime(reader["SentOn"]),
                             Delivered = Convert.ToDateTime(reader["Delivered"])
                         };
-                        reader.Close();
                         result.Add(nm);
                     }
 

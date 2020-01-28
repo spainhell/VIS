@@ -18,11 +18,11 @@ namespace bl
             return VehicleDbMapper.SelectById(conn, id);
         }
 
-        public static bool Create(SQLiteConnection conn, Vehicle vh, int typeId, int brandId, int driverId, int bossId)
+        public static int Create(SQLiteConnection conn, Vehicle vh, int typeId, int brandId, int driverId, int bossId)
         {
             // kontrola existence VIN v databázi
             bool vinExists = VehicleDbMapper.VinExists(conn, vh.Vin);
-            if (vinExists) return false;
+            if (vinExists) return -1;
 
             vh.VehicleType = VehicleTypeXmlMapper.SelectById(typeId);
             vh.VehicleBrand = VehicleBrandXmlMapper.SelectById(brandId);
@@ -31,7 +31,7 @@ namespace bl
 
             int result = VehicleDbMapper.Insert(conn, vh);
 
-            return true;
+            return result;
         }
 
         public static bool Delete(SQLiteConnection conn, int adminId, int vehicleId)
@@ -47,7 +47,9 @@ namespace bl
                 InspectionLogic.Delete(conn, inspection.Id);
             }
 
-            return true;
+            var delete = VehicleDbMapper.Delete(conn, vehicleId);
+
+            return delete == 0;
         }
 
         public static long CountVehiclesByAdminId(SQLiteConnection conn, int adminId)

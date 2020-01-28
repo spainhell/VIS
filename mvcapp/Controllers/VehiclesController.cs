@@ -46,7 +46,6 @@ namespace mvcapp.Controllers
 
             List<UserDriver> drivers = UserDriverLogic.FindAll(sqlconn);
             List<UserBoss> bosses = UserBossLogic.FindAll(sqlconn);
-
             sqlconn.Close();
 
             ViewData["vehicleTypes"] = types;
@@ -64,15 +63,24 @@ namespace mvcapp.Controllers
         {
             try
             {
+                sqlconn.Open();
+
                 var r = VehicleLogic.Create(sqlconn, vehicle, vehicle.VehicleTypeId.Value, vehicle.VehicleBrandId.Value, 4, 1);
 
-                if (!r) return View();
+                if (r == -1)
+                {
+                    sqlconn.Close();
+                    TempData["SuccessMessage"] = "VIN už v DB existuje.";
+                    return View();
+                }
 
+                sqlconn.Close();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
                 sqlconn.Close();
+                TempData["SuccessMessage"] = "Chyba při ukládání vozidla do DB.";
                 return View();
             }
         }
@@ -104,10 +112,15 @@ namespace mvcapp.Controllers
         public ActionResult Delete(int id)
         {
             sqlconn.Open();
-            Vehicle vehicle = VehicleLogic.FindById(sqlconn, id);
+            var vehicle = VehicleLogic.Delete(sqlconn, 1, id);
             sqlconn.Close();
 
-            return View(vehicle);
+            if (!vehicle)
+            {
+                return View(@"<script language='javascript'>alert('Nemáte oprávnění smazat vozidlo.');</script>");
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Vehicles/Delete/5
@@ -121,7 +134,7 @@ namespace mvcapp.Controllers
                 List<Inspection> inspections = InspectionLogic.FindAllByVehicleId(sqlconn, id);
                 sqlconn.Close();
 
-                if (inspections.Count > 0) return View(vehicle);
+                if (inspections.Count > 0) return View("<script>alert('Nemůžete smazat vozidlo, které obsahuje prohlídky.');</script>");
 
                 sqlconn.Open();
                 VehicleLogic.Delete(sqlconn, 1, vehicle.Id);

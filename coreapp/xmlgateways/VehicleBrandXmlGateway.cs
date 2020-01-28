@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml;
 
-namespace core.xmlmappers
+namespace core.xmlgateways
 {
     public class VehicleBrandXmlGateway
     {

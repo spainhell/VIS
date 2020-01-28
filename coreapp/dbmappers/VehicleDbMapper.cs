@@ -170,14 +170,11 @@ namespace core.dbmappers
             return 0;
         }
 
-        public static int Delete(SQLiteConnection conn, Vehicle vm)
+        public static int Delete(SQLiteConnection conn, int vehicleId)
         {
-            if (vm == null) return -2;
-            if (vm.Id < 0) return -3;
-
             using (SQLiteCommand cmd = new SQLiteCommand(delete, conn))
             {
-                cmd.Parameters.AddWithValue("@Id", vm.Id);
+                cmd.Parameters.AddWithValue("@Id", vehicleId);
 
                 try
                 {
@@ -190,6 +187,14 @@ namespace core.dbmappers
                 }
             }
             return 0;
+        }
+
+        public static int Delete(SQLiteConnection conn, Vehicle vm)
+        {
+            if (vm == null) return -2;
+            if (vm.Id < 0) return -3;
+
+            return Delete(conn, vm.Id);
         }
 
         public static bool VinExists(SQLiteConnection conn, string vin)

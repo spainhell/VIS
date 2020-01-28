@@ -84,6 +84,8 @@ namespace bl
             {
                 NotificationDbMapper.Delete(conn, notify.Id);
             }
+
+            InspectionDbMapper.Delete(conn, id);
         }
 
         public static int EndingInspectionsCount(SQLiteConnection conn, int adminId, int remainDays)

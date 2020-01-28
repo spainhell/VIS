@@ -210,9 +210,14 @@ namespace core.dbmappers
             if (im == null) return -2;
             if (im.Id < 0) return -3;
 
+            return Delete(conn, im.Id);
+        }
+
+        public static int Delete(SQLiteConnection conn, int inspectionId)
+        {
             using (SQLiteCommand cmd = new SQLiteCommand(delete, conn))
             {
-                cmd.Parameters.AddWithValue("@Id", im.Id);
+                cmd.Parameters.AddWithValue("@Id", inspectionId);
 
                 try
                 {

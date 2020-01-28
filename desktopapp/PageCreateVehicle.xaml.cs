@@ -38,6 +38,11 @@ namespace wpfapp
             cbBrand.DisplayMemberPath = "BrandName";
             cbBrand.SelectedValuePath = "Id";
 
+            tbLicensePlate.Text = "";
+            tbPrice.Text = "";
+            tbTitle.Text = "";
+            tbVin.Text = "";
+            tbVintage.Text = "";
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -51,7 +56,15 @@ namespace wpfapp
                 Title = tbTitle.Text, VehicleBrand = null, VehicleType = null, Vin = tbVin.Text, Vintage = Convert.ToInt16(tbVintage.Text)
             };
 
-            VehicleLogic.Create(_sqlConn, vm, Convert.ToInt32(typeId), Convert.ToInt32(brandId), 4, 1);
+            var result = VehicleLogic.Create(_sqlConn, vm, Convert.ToInt32(typeId), Convert.ToInt32(brandId), 4, 1);
+            if (result == -1)
+                MessageBox.Show($"VIN již v DB existuje.", "Stop", MessageBoxButton.OK, MessageBoxImage.Stop);
+
+            else if (result == 0)
+            {
+                MessageBox.Show($"Vozidlo bylo uloženo.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                Refresh();
+            }
         }
     }
 }

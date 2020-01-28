@@ -37,7 +37,7 @@ namespace wpfapp
             var lastInsp = InspectionLogic.GetLastInspection(_sqlConn, _vehicle.Id);
             if (lastInsp == null) return;
 
-            tbValidDays.Text = (lastInsp.ValidTo - lastInsp.InspectionDate).TotalDays + " dní";
+            tbValidDays.Text = (lastInsp.ValidTo - DateTime.Today).TotalDays + " dní";
             tbValidTo.Text = lastInsp.ValidTo.ToShortDateString();
             tbStation.Text = lastInsp.InspectionStation.Company;
         }
@@ -49,7 +49,7 @@ namespace wpfapp
 
             if (mb == MessageBoxResult.No) return;
 
-            VehicleLogic.Delete(_sqlConn, 1, _vehicle.Id);
+            VehicleLogic.Delete(_sqlConn, 2, _vehicle.Id);
 
             _parent.Refresh();
             Close();

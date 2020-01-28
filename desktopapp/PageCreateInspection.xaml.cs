@@ -74,6 +74,10 @@ namespace wpfapp
                 {
                     MessageBox.Show(error, "Stop", MessageBoxButton.OK, MessageBoxImage.Stop);
                 }
+                else
+                {
+                    MessageBox.Show($"Prohlídka byla uložena.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
 
             }
             catch (Exception ex)
@@ -81,6 +85,7 @@ namespace wpfapp
                 MessageBox.Show($"Vyplněné údaje jsou chybné:\n{ex.Message}",
                     "Stop", MessageBoxButton.OK, MessageBoxImage.Stop);
             }
+
         }
 
         private void cbVehicle_SelectionChanged(object sender, SelectionChangedEventArgs e)
